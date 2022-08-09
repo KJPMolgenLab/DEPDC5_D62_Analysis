@@ -46,23 +46,11 @@ set.seed(157434538)
 
 
 ```{r getdata}
-#Load Count Matrix
-if (file.exists(secret)){
-    source(secret)
-  } else {
-    UID    = rstudioapi::askForPassword("fuchs user")
-    PWD    = rstudioapi::askForPassword("fuchs password")
-  }
+
 
 filetarget= paste0(home,"/data/Countmatrix.RData")
-if(!file.exists(filetarget)){
-  url="sftp://fuchs.hhlr-gu.de/scratch/fuchs/agmisc/chiocchetti/RNASeq_Data/Cepter/Output/Countmatrix.RData"
-  bin = getBinaryURL(url, userpw=paste0(UID,":",PWD))
-  writeBin(bin, filetarget)
-  load(filetarget)
-} else {
-  load(filetarget)
-}
+load(filetarget)
+
 
 Ntot= nrow(Countdata)
 
@@ -92,7 +80,7 @@ rownames(rowdescription)=row.names(Countdata)
 
 
 # load and parse sample information 
-SampleInfo=read.csv2(paste0(home,"/data/Sample_info_CePTER_RNASeq.csv"), 
+SampleInfo=read.csv2(paste0(home,"/data/D62_Sample_info_CePTER_RNASeq.csv"), 
                      row.names = 1)
 
 SampleInfo$Row=gsub("[0-9]*","",SampleInfo$Position)
@@ -134,11 +122,7 @@ SampleInfo$reads_per_sample = colSums(Countdata)
 ```
 
 
-```{r filter D62 only}
-
-D62.index=SampleInfo$CellLine=="D62"
-Countdata=Countdata[,D62.index]
-SampleInfo=SampleInfo[D62.index,]
+```{r display data D62}
 
 display_tab(head(Countdata))
 display_tab(SampleInfo)
@@ -147,29 +131,35 @@ display_tab(SampleInfo)
 Total number of samples overlapping between Counts and SampleInfo: `r nrow(SampleInfo)`
 
 
-```{r plot_counts}
-boxplot_counts = function(plotsubset, maintitle, colorcode) {
-  par(mar=c(3,3,5,7))
-  a =boxplot(log2(plotsubset+1), main = maintitle, 
+```{r plot_counts, fig.height=5, fig.width=8}
+
+boxplot_counts = function(plotsubset,maintitle,colorcode){
+  vals=log2(plotsubset+1)
+  a =boxplot(vals, main = maintitle, 
              col = Dark8[as.factor(SampleInfo[,colorcode])], names=NA,
-             ylab = "log2 transformed", xlab="samples")
-  legend("bottomleft", legend = levels(SampleInfo[,colorcode]),
-         bty = "n", bg="white",
+             ylab = "log2 transformed", xlab="samples", xaxt="n")
+  legend(ncol(vals)*1.1, max(vals), legend = levels(SampleInfo[,colorcode]),
+         bg="white",xpd=T,box.col = "white",
          pch = 16, col = Dark8[1:length(unique(SampleInfo[,colorcode]))])
 }
 
 
 barplot_counts = function(DF, maintitle, colorcode) {
-  barplot(log2(DF[,"reads_per_sample"]), main = maintitle, 
-          col = Dark8[as.factor(DF[,colorcode])], names="",
-          ylab = "log2 transformed",xlab="samples")
-  legend("bottomleft", legend = levels(DF[,colorcode]), pch = 16, 
-         bty = "n", bg="white",
+
+  vals=log2(DF[,"reads_per_sample"])
+  barplot(vals, main = maintitle, 
+          col = Dark8[as.factor(DF[,colorcode])], names=NA, xaxt="n",
+          ylab = "log2 transformed", xlab="samples")
+  legend(length(vals)*1.25, max(vals), legend = levels(DF[,colorcode]), pch = 16, 
+         bg ="white",xpd=T, box.col="white",
          col = Dark8[1:length(unique(DF[,colorcode]))])
 }
 
+
+par(mar=c(3,5,5,7))
 boxplot_counts(Countdata, "raw counts", "gRNA")
 barplot_counts(SampleInfo, "total reads", "gRNA")
+
 
 plot(density(log2(rowMeans(Countdata))), main="distribution of gene expression", 
      xlab="mean log2(counts +1)")
@@ -218,7 +208,6 @@ SampleInfo$reads_per_sample_cl= colSums(reads)
 * Standard deviation reads per samples: `r format(sd(colSums(reads)), big.mark=" ", scientific=F)`
 * Genes removed due to low reads: `r format(Ntot-Nfilt, big.mark = " ")` 
 * Total genes included after filtering: `r format(Nfilt, big.mark=" ")`
-
 
 ## Clustering 
 
@@ -345,6 +334,8 @@ ggplot(gpca.dat, aes(x = dim1, y = dim2, color = gRNA,
 
 ggplot(mds, aes(x = `1`, y = `2`, color = gRNA, shape = Growth_cond)) +
             geom_point(size = 2)  + ggtitle("MDS with log2 counts D62")
+
+save(ddsMat, file=paste0(output,"/D62_dds_matrix.RData"))
 
 ```
 
