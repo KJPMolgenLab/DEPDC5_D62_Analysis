@@ -122,7 +122,15 @@ GOplot = function(GOtable, N, Title="GO plot"){
                        labels=Tabtoplot$term_name)
 }
 
-geneheatmap=function(GOIsEntrez,exprobj,CellID){
+geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL){
+  CellIDorig=CellID
+
+  if(is.null(CellIDorig)){
+    CellID = unique(SampleInfo$CellLine)
+  } else {
+    CellID = CellIDorig
+  }
+
 
   idx = match(GOIsEntrez, rownames(exprobj))
   log_2cpm=log2(counts(exprobj, normalize=T)+1)
@@ -154,11 +162,17 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
     RAPA = rapacol,
     gRNA = gRNAcol)
 
-
+  if(is.null(CellIDorig)){
+  labels = SampleInfo[match(colnames(dataset), SampleInfo$label_rep),
+                      c("gRNA","DIFF", "RAPA")]
+  } else {
 
   labels = SampleInfo[match(colnames(dataset), SampleInfo$label_rep),
-                      c("gRNA","DIFF", "RAPA", "CellLine")] %>%
-    mutate_all(as.character) %>% as.data.frame()
+                      c("gRNA","DIFF", "RAPA", "CellLine")]
+  }
+
+  labels = labels %>% mutate_all(as.character) %>% as.data.frame()
+
 
 
   rownames(labels)=colnames(dataset)
@@ -168,29 +182,32 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID){
            cluster_rows = F,
            cluster_cols = F,
            col = colors,
-           scale = "column",
+           fontsize=8,
+           scale = "none",
            annotation_col = labels,
            annotation_colors = ann_colors,
-           main=paste(CellID, collapse=" "))
+           main="log(count+1) gene expression")
 
 }
 
 samesign <- function(x) {abs(sum(sign(x)))==length(x)}
 
-multiORplot = function(datatoplot=FALSE, Pval = "Pval", Padj = "Padj", SE = "SE", beta="beta", pheno = "pheno"){
+multiORplot = function(datatoplot=FALSE, Pval = "Pval", Padj = "Padj", SE = "SE", beta="beta", pheno = "pheno", xlims=NULL){
   starpval=convertpvaltostars(datatoplot[[Pval]])
   starpval[datatoplot[[Padj]]<0.05]="adj.p**"
   starpval[is.na(datatoplot[[beta]])]="n.a."
   CIUpper = datatoplot[[beta]] +1.96*datatoplot[[SE]]
   CILower = datatoplot[[beta]] -1.96*datatoplot[[SE]]
-  xlim=range(c(CIUpper, CILower), na.rm=T)*1.2
+  if(length(xlims)==0){
+    xlims=range(c(CIUpper, CILower), na.rm=T)*1.2
+  }
   par(mar=c(5,16,5,2))
   betas = datatoplot[[beta]]
 
   plot(x=betas, y=1:length(betas),
        type="n", panel.first = grid(ny=NA),
        yaxt = "n", ylab="",
-       xlim=xlim,
+       xlim=xlims,
        xlab=expression(paste('log(OR)'%+-%95,"%CI")),
        main=paste(pheno))
   abline(v=0,col="black", lty=3)

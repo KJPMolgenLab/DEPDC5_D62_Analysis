@@ -12,7 +12,7 @@ home = getwd()
 # Statistical analysis 
 
 ```{r setup, include=FALSE, echo=F}
-reanalyze=T
+reanalyze=F
 output= paste0(home, "/output/")
 
 source(paste0(home,"/code/custom_functions.R"))
@@ -25,7 +25,7 @@ library(WGCNA)
 library(flashClust)
 library(pheatmap)
 library(limma)
-library(xlsx)
+library(openxlsx)
 
 opts_chunk$set(echo = TRUE, 
                fig.height = 7, 
@@ -50,14 +50,17 @@ log_2cpm=log2(counts(ddsMat, normalize=T)+1)
 ```{r loops_for_comparison, message=F}
 
 if(reanalyze | !file.exists(paste0(home,"/output/D62_ResTabs_KO.RData"))){
-  # calculate all combinations 
   
+  
+  ## comparisons against noRAPA NTC
   Rapamycin=c("noRAPA", "RAPA")
   Differentiation=c("noDIFF", "DIFF")
-  Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC","sg2.2"))
+  Type_sgRNA<-c("sg2.1","sg2.2")
   target="KO"
   
-  Cl="D62"
+  r = Rapamycin[1]
+  d = Differentiation[1]
+  Tp = Type_sgRNA[[1]]
   
   
   # no random effects included 
@@ -67,17 +70,42 @@ if(reanalyze | !file.exists(paste0(home,"/output/D62_ResTabs_KO.RData"))){
       Difffilter = SampleInfo$DIFF %in% d
       for(Tp in Type_sgRNA){
         sgRNAfilter = SampleInfo$gRNA %in% Tp
+        vs_label=paste0(c("sgNTC", Tp), sep="", collapse="_")
+        Set = rownames(SampleInfo)[Rapafilter&Difffilter&
+                                     sgRNAfilter]
+        Set = c(Set, rownames(SampleInfo)[SampleInfo$RAPA == "noRAPA" & Difffilter&
+                                            SampleInfo$gRNA == "sgNTC"])
+       
+        lab = paste("restab", "D62_NTCnoRAPA", vs_label, d,r, sep="_")
+         print(lab)
+        assign(lab, comparison(ddsMat, Set, target, randomeffect = NULL))
+      }
+    }
+  }
+  
+  
+  # calculate all combinations against same NTC (treated)
+  
+  Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC","sg2.2"))
+  Cl<-"D62"
+  
+  # no random effects included 
+  for(r in Rapamycin){
+    Rapafilter = SampleInfo$RAPA %in% r
+    for(d in Differentiation){
+      Difffilter = SampleInfo$DIFF %in% d
+      for(Tp in Type_sgRNA){
+        sgRNAfilter = SampleInfo$gRNA %in% Tp
         vs_label=paste0(Tp, sep="", collapse="_")
-          
-          
-          Set = rownames(SampleInfo)[Rapafilter&Difffilter&
-                                       sgRNAfilter]
-          lab = paste("restab", Cl, vs_label, d,r, sep="_")
-          print(lab)
-          assign(lab, 
-                 comparison(ddsMat, samples = Set, 
-                            target =target,randomeffect = c()))
         
+        
+        Set = rownames(SampleInfo)[Rapafilter&Difffilter&
+                                     sgRNAfilter]
+        lab = paste("restab", "D62_NTCwRAPA",vs_label, d,r, sep="_")
+        print(lab)
+        assign(lab, 
+               comparison(ddsMat, samples = Set, 
+                          target =target,randomeffect = c()))
       }
     }
   }
@@ -86,7 +114,6 @@ if(reanalyze | !file.exists(paste0(home,"/output/D62_ResTabs_KO.RData"))){
   save(list = comparisons, file = paste0(home,"/output/D62_ResTabs_KO.RData"))
 } else 
   load(file = paste0(home,"/output/D62_ResTabs_KO.RData"))
-
 
 ```
 
@@ -103,34 +130,42 @@ genelists=lapply(list.files(paste0(home,"/data/genelists_to_test"), full.names =
 names(genelists) = gsub(".txt", "", list.files(paste0(home,"/data/genelists_to_test")))
 
 
-geneids=rownames(restab_D62_sgNTC_sg2.1_noDIFF_noRAPA)
-
 
 getlinmodoutput = function(targetline="D62", 
                            targetdiff, 
-                           targetrapa){
+                           targetrapa, 
+                           refset="NTCnoRAPA"){
   
   
+  if(refset=="NTCnoRAPA"){
+    samplesincl=SampleInfo$DIFF==targetdiff &
+      SampleInfo$RAPA==targetrapa &  
+      SampleInfo$KO == "KO"
+    samplesincl = samplesincl | (SampleInfo$DIFF==targetdiff &
+      SampleInfo$RAPA=="noRAPA" &  
+      SampleInfo$KO == "WT")
+    
+  } else {
   samplesincl = SampleInfo$DIFF==targetdiff & 
-    SampleInfo$RAPA==targetrapa &
-    SampleInfo$CellLine== targetline
+    SampleInfo$RAPA==targetrapa 
+  }  
   
   
   pvalrep=  get(paste0("restab_", 
-                       targetline, "_sgNTC_sg2.1_", 
+                       targetline,"_",refset, "_sgNTC_sg2.1_", 
                        targetdiff, "_" , 
                        targetrapa))$padj<mypval &
     get(paste0("restab_", 
-               targetline, "_sgNTC_sg2.2_", 
+               targetline, "_",refset,"_sgNTC_sg2.2_", 
                targetdiff, "_" , 
                targetrapa))$padj<mypval
   
   betarep = apply(cbind(get(paste0("restab_", 
-                                   targetline, "_sgNTC_sg2.1_", 
+                                   targetline,"_",refset,  "_sgNTC_sg2.1_", 
                                    targetdiff, "_" , 
                                    targetrapa))$log2FoldChange,
                         get(paste0("restab_", 
-                                   targetline, "_sgNTC_sg2.2_", 
+                                   targetline,"_",refset,  "_sgNTC_sg2.2_", 
                                    targetdiff, "_" , 
                                    targetrapa))$log2FoldChange), 1,
                   samesign)
@@ -142,25 +177,25 @@ getlinmodoutput = function(targetline="D62",
     entrezgene = geneids[idx], 
     genname=rowData(ddsMat)[hits,"hgnc"],
     log2FC_2.1 = get(paste0("restab_", 
-                            targetline, "_sgNTC_sg2.1_", 
+                            targetline,"_",refset,  "_sgNTC_sg2.1_", 
                             targetdiff, "_" , 
                             targetrapa))$log2FoldChange[idx], 
     fdr_2.1 = get(paste0("restab_", 
-                          targetline, "_sgNTC_sg2.1_", 
-                          targetdiff, "_" , 
-                          targetrapa))$padj[idx], 
+                         targetline,"_",refset,  "_sgNTC_sg2.1_", 
+                         targetdiff, "_" , 
+                         targetrapa))$padj[idx], 
     log2FC_2.2 = get(paste0("restab_", 
-                            targetline, "_sgNTC_sg2.2_", 
+                            targetline,"_",refset,  "_sgNTC_sg2.2_", 
                             targetdiff, "_" , 
                             targetrapa))$log2FoldChange[idx], 
     fdr_2.2 = get(paste0("restab_", 
-                          targetline, "_sgNTC_sg2.2_", 
-                          targetdiff, "_" , 
-                          targetrapa))$padj[idx])
+                         targetline,"_",refset,  "_sgNTC_sg2.2_", 
+                         targetdiff, "_" , 
+                         targetrapa))$padj[idx])
   
   print(restab)
   write.xlsx(restab, file=paste0(output, "/Restab_", 
-                                 targetline,"_", 
+                                 targetline,"_",refset, "_", 
                                  targetdiff, "_",
                                  targetrapa, ".xlsx"))
   
@@ -173,9 +208,6 @@ getlinmodoutput = function(targetline="D62",
   colnames(plotmatrix)=SamplesSet$label_rep
   rownames(plotmatrix)=rowData(ddsMat)[hits,"hgnc"]     
   
-  cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
-  names(cellcol) = levels(SampleInfo$CellLine)
-  cellcol = cellcol[as.character(unique(SamplesSet$CellLine))]
   
   gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
   names(gRNAcol) = levels(SampleInfo$gRNA)
@@ -192,10 +224,9 @@ getlinmodoutput = function(targetline="D62",
   ann_colors = list(
     DIFF = diffcol, 
     RAPA = rapacol,
-    gRNA = gRNAcol,
-    CellLine=cellcol)
+    gRNA = gRNAcol)
   
-  collabels = SamplesSet[,c("CellLine","DIFF","RAPA", "gRNA")] %>%  
+  collabels = SamplesSet[,c("DIFF","RAPA", "gRNA")] %>%  
     mutate_all(as.character) %>% as.data.frame()
   
   rownames(collabels)=SamplesSet$label_rep
@@ -205,7 +236,8 @@ getlinmodoutput = function(targetline="D62",
   
   pheatmap(plotmatrix[,idx],
            border_color = NA, 
-           annotation_col = collabels[idx,],show_rownames = F, show_colnames = F,
+           annotation_col = collabels[idx,],
+           show_rownames = F, show_colnames = F,
            annotation_colors = ann_colors,
            clustering_method = "ward.D2",
            cluster_cols = F,
@@ -221,7 +253,7 @@ getlinmodoutput = function(targetline="D62",
   toptab = gostres$result
   
   
-  write.xlsx2(toptab, file = paste0(output, "/GOres_",targetline,targetdiff,targetrapa,".xlsx"), sheetName = "GO_enrichment")
+  write.xlsx(toptab, file = paste0(output, "/GOres_",targetline,targetdiff,targetrapa,".xlsx"), sheetName = "GO_enrichment")
   
   idx = grepl("GO|KEGG", toptab$source)
   titlename = paste(targetline,targetdiff,targetrapa)
@@ -253,11 +285,11 @@ getlinmodoutput = function(targetline="D62",
   print(Resall)
   
   multiORplot(Resall, Pval = "P", Padj = "Padj", beta="Beta",SE = "SE", 
-              pheno=paste(targetline, targetdiff, targetrapa))
+              pheno=paste(targetline, targetdiff, targetrapa), xlims=c(-4.5,4.5))
 }
 
-geneids=rownames(restab_D62_sgNTC_sg2.1_noDIFF_noRAPA)
 
+geneids=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA)
 
 ```
 
@@ -266,8 +298,7 @@ geneids=rownames(restab_D62_sgNTC_sg2.1_noDIFF_noRAPA)
 
 ```{r noDIFF_noRAPA_D62}
 
-getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "noRAPA")
-
+getlinmodoutput(targetdiff = "noDIFF",targetrapa = "noRAPA")
 
 ```
 
@@ -277,7 +308,7 @@ getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "noRAPA")
 
 ```{r DIFF_noRAPA_D62}
 
-getlinmodoutput(targetline = "D62",targetdiff = "DIFF",targetrapa = "noRAPA")
+getlinmodoutput(targetdiff = "DIFF",targetrapa = "noRAPA")
 
 ```
 
@@ -286,7 +317,8 @@ getlinmodoutput(targetline = "D62",targetdiff = "DIFF",targetrapa = "noRAPA")
 
 ```{r noDIFF_RAPA_D62}
 
-getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
+getlinmodoutput(targetdiff = "noDIFF",targetrapa = "RAPA")
+getlinmodoutput(targetdiff = "noDIFF",targetrapa = "RAPA", refset = "NTCwRAPA" )
 
 ```
 
@@ -296,6 +328,49 @@ getlinmodoutput(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
 
 ```{r DIFF_RAPA_D62}
 
-getlinmodoutput(targetline = "D62",targetdiff = "DIFF",targetrapa = "RAPA")
+getlinmodoutput(targetdiff = "DIFF",targetrapa = "RAPA")
+getlinmodoutput(targetdiff = "DIFF",targetrapa = "RAPA", refset = "NTCwRAPA" )
 
 ```
+
+
+```{r custom table for paper}
+
+# with noRAPA NTCF as reference
+
+noDIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA),
+                         SYMBOL=rowData(ddsMat)$hgnc,
+                         sg2.1_noDiff_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
+                         sg2.1_noDiff_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$padj,
+                         sg2.2_noDiff_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange,
+                         sg2.2_noDiff_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$padj,
+                         sg2.1_noDiff_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,
+                         sg2.1_noDiff_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,
+                         sg2.2_noDiff_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange,
+                         sg2.2_noDiff_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj, 
+                         sg2.1_noDiff_RAPA_rapantc_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,
+                         sg2.1_noDiff_RAPA_rapantc_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,
+                         sg2.2_noDiff_RAPA_rapantc_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange,
+                         sg2.2_noDiff_RAPA_rapantc_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)
+write.xlsx(noDIFFresults, file=paste0(output, "/noDiff_refnoRAPA_allgenes.xlsx"))
+
+
+DIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA),
+                         SYMBOL=rowData(ddsMat)$hgnc,
+                         sg2.1_DIFF_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,
+                         sg2.1_DIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA$padj,
+                         sg2.2_DIFF_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange,
+                         sg2.2_DIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$padj,
+                         sg2.1_DIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,
+                         sg2.1_DIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,
+                         sg2.2_DIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange,
+                         sg2.2_DIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$padj, 
+                         sg2.1_DIFF_RAPA_rapantc_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,
+                         sg2.1_DIFF_RAPA_rapantc_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,
+                         sg2.2_DIFF_RAPA_rapantc_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange,
+                         sg2.2_DIFF_RAPA_rapantc_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)
+write.xlsx(DIFFresults, file=paste0(output, "/Diff_refnoRAPA_allgenes.xlsx"))
+
+```
+
+

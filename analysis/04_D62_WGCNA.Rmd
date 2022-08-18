@@ -25,7 +25,7 @@ library(WGCNA)
 library(flashClust)
 library(pheatmap)
 library(gprofiler2)
-library(xlsx)
+library(openxlsx)
 
 
 opts_chunk$set(echo = TRUE, 
@@ -43,7 +43,6 @@ SampleInfo = as.data.frame(colData(ddsMat))
 log_2cpm=log2(counts(ddsMat, normalize=T)+1)
 
 ```
-
 # WGCNA
 ## soft thresholding 
 ```{r softthreshold}
@@ -75,7 +74,9 @@ text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
 ## Identify Gene Modules
 
 ```{r adjacency}
-softPower = 6; # The point where the curve flattens
+softPower = 6;
+
+# The point where the curve flattens
 #calclute the adjacency matrix
 
 if(reanalyze | !file.exists(paste0(output,"/D62_WGCNA_adj_TOM.RData"))){
@@ -143,7 +144,7 @@ TOMplot(dissTOM^4, geneTree, as.character(dynamicColors), main="weighted distanc
 # Module eigengenes 
 ## Identify and Merge correlated modules 
 
-```{r MEs,  fig.height=20, fig.width=15}
+```{r MEs,  fig.width=8}
 #calculate eigengenes
 MEList = moduleEigengenes(WGCNA_matrix, colors = dynamicColors)
 MEs = MEList$eigengenes 
@@ -178,8 +179,6 @@ save(ddsMat, file=paste0(output,"/D62_dds_matrix.RData"))
 #colors for plotting heatmap
 colors <- rev(colorRampPalette(brewer.pal(9, "Spectral"))(255))
 
-cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
-names(cellcol) = levels(SampleInfo$CellLine)
 
 gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
 names(gRNAcol) = levels(SampleInfo$gRNA)
@@ -199,13 +198,12 @@ ann_colors = list(
   DIFF = diffcol, 
   RAPA = rapacol,
   gRNA = gRNAcol,
-  CellLine=cellcol,
   cluster = clustcol)
 
-idx=order(SampleInfo$gRNA, SampleInfo$CellLine, SampleInfo$DIFF,SampleInfo$RAPA)
+idx=order(SampleInfo$gRNA, SampleInfo$DIFF,SampleInfo$RAPA)
 WGCNA_matrix_sorted=WGCNA_matrix[SampleInfo$label_rep[idx], order(colors_new)]
 
-collabels = SampleInfo[idx,c("CellLine","gRNA","DIFF", "RAPA")] %>%  
+collabels = SampleInfo[idx,c("gRNA","DIFF", "RAPA")] %>%  
   mutate_all(as.character) %>% as.data.frame()
 
 rownames(collabels)=SampleInfo$label_rep[idx]
@@ -213,17 +211,6 @@ rownames(collabels)=SampleInfo$label_rep[idx]
 genlabels = data.frame(cluster = as.character(colors_new)[order(colors_new)])
 rownames(genlabels) = colnames(WGCNA_matrix_sorted)
 
-# pheatmap(t(WGCNA_matrix_sorted),
-#          cluster_rows= F,
-#          cluster_cols = F,
-#          border_color = NA, show_rownames = F, show_colnames = F,
-#          clustering_method = "ward.D2",
-#          annotation_row = genlabels,
-#          annotation_col = collabels,
-#          annotation_colors = ann_colors,
-#          col = colors, 
-#          scale = "row",
-#          main = "Distances  normalized log2 counts")
 
 MElabels = data.frame(cluster = gsub("ME", "",colnames(MEs)))
 rownames(MElabels) = colnames(MEs)
@@ -235,7 +222,6 @@ ann_colors = list(
   DIFF = diffcol, 
   RAPA = rapacol,
   gRNA = gRNAcol,
-  CellLine=cellcol,
   cluster = clustcol)
 
 rownames(MEs) = SampleInfo[rownames(MEs),"label_rep"]
@@ -289,14 +275,13 @@ comparisonME = function(SampleInfo, Set, target){
   coeff$padj = p.adjust(coeff$`Pr(>|t|)`, "bonferroni")
   return(coeff)}
 
-#CellLines=c("D62","D244","ReN")
+## comparisons against noRAPA NTC
 Rapamycin=c("noRAPA", "RAPA")
 Differentiation=c("noDIFF", "DIFF")
-Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC","sg2.2"))
+Type_sgRNA<-c("sg2.1","sg2.2")
 target="KO"
 
 r = Rapamycin[1]
-#Cl=CellLines[1]
 d = Differentiation[1]
 Tp = Type_sgRNA[[1]]
 
@@ -308,45 +293,78 @@ for(r in Rapamycin){
     Difffilter = SampleInfo$DIFF %in% d
     for(Tp in Type_sgRNA){
       sgRNAfilter = SampleInfo$gRNA %in% Tp
-      vs_label=paste0(Tp, sep="", collapse="_")
+      vs_label=paste0(c("sgNTC", Tp), sep="", collapse="_")
         Set = rownames(SampleInfo)[Rapafilter&Difffilter&
                                      sgRNAfilter]
-        lab = paste("restabWGCNA", "D62", vs_label, d,r, sep="_")
+        Set = c(Set, rownames(SampleInfo)[SampleInfo$RAPA == "noRAPA" & Difffilter&
+                                     SampleInfo$gRNA == "sgNTC"])
+        lab = paste("restabWGCNA", "D62_NTCnoRAPA", vs_label, d,r, sep="_")
         assign(lab, comparisonME(SampleInfo, Set, target))
     }
   }
 }
 
-comparisons= apropos("restabWGCNA")
-save(list = comparisons, file = paste0(home,"/output/D62_ResTabs_KO_WGCNA.RData"))
+
+
+# comparison agains RAPANTC
+Rapamycin=c("noRAPA", "RAPA")
+Differentiation=c("noDIFF", "DIFF")
+Type_sgRNA<-list(c("sgNTC","sg2.1"),c("sgNTC", "sg2.2"))
+target="KO"
+
+# comparison agains RAPANTC
+for(r in Rapamycin){
+  Rapafilter = SampleInfo$RAPA %in% r
+  for(d in Differentiation){
+    Difffilter = SampleInfo$DIFF %in% d
+    for(Tp in Type_sgRNA){
+      sgRNAfilter = SampleInfo$gRNA %in% Tp
+      vs_label=paste0(Tp, sep="", collapse="_")
+        Set = rownames(SampleInfo)[Rapafilter&Difffilter&
+                                     sgRNAfilter]
+        lab = paste("restabWGCNA", "D62_NTCwRAPA", vs_label, d,r, sep="_")
+        assign(lab, comparisonME(SampleInfo, Set, target))
+    }
+  }
+}
+
+comparisons= apropos("restabWGCNA_D62")
+save(list = comparisons, file = paste0(home,"/output/D62_ResTabs_WGCNA.RData"))
+
 
 ```
 
 ```{r get_WGCNAoutputs}
 
 mypval=0.05
-MEIds = rownames(restabWGCNA_D62_sgNTC_sg2.1_noDIFF_noRAPA)
+MEIds = rownames(get(apropos("restabWGCNA")[1]))
 
-getWGCNAoutputs = function(targetline="D62",targetdiff,targetrapa){
+getWGCNAoutputs = function(targetline="D62",targetdiff,
+                           targetrapa, refset="NTCnoRAPA", plotset=T){
   
-  samplesincl = SampleInfo$DIFF==targetdiff & 
-    SampleInfo$RAPA==targetrapa
+    if(refset=="NTCnoRAPA"){
+    samplesincl=SampleInfo$DIFF==targetdiff &
+      SampleInfo$RAPA==targetrapa &  
+      SampleInfo$KO == "KO"
+    samplesincl = samplesincl | (SampleInfo$DIFF==targetdiff &
+      SampleInfo$RAPA=="noRAPA" &  
+      SampleInfo$KO == "WT")
   
   pvalrep=  get(paste0("restabWGCNA_", 
-                       targetline, "_sgNTC_sg2.1_", 
+                       targetline,"_",refset, "_sgNTC_sg2.1_", 
                        targetdiff, "_" , 
                        targetrapa))$padj<=mypval &
     get(paste0("restabWGCNA_", 
-               targetline, "_sgNTC_sg2.2_", 
+               targetline, "_",refset, "_sgNTC_sg2.2_", 
                targetdiff, "_" , 
                targetrapa))$padj<=mypval
   
   betarep = apply(cbind(get(paste0("restabWGCNA_", 
-                                   targetline, "_sgNTC_sg2.1_", 
+                                   targetline, "_",refset, "_sgNTC_sg2.1_", 
                                    targetdiff, "_" , 
                                    targetrapa))$Estimate,
                         get(paste0("restabWGCNA_", 
-                                   targetline, "_sgNTC_sg2.2_", 
+                                   targetline, "_",refset, "_sgNTC_sg2.2_", 
                                    targetdiff, "_" , 
                                    targetrapa))$Estimate), 1,
                   samesign)
@@ -358,29 +376,31 @@ getWGCNAoutputs = function(targetline="D62",targetdiff,targetrapa){
   restab=data.frame(
     Module = MEIds, 
     beta_2.1 = get(paste0("restabWGCNA_", 
-                          targetline, "_sgNTC_sg2.1_", 
+                          targetline,"_",refset,  "_sgNTC_sg2.1_", 
                           targetdiff, "_" , 
                           targetrapa))$Estimate, 
     bonferroni_2.1 = get(paste0("restabWGCNA_", 
-                                targetline, "_sgNTC_sg2.1_", 
+                                targetline, "_",refset, "_sgNTC_sg2.1_", 
                                 targetdiff, "_" , 
                                 targetrapa))$padj, 
     beta_2.2 = get(paste0("restabWGCNA_", 
-                          targetline, "_sgNTC_sg2.2_", 
+                          targetline,"_",refset,  "_sgNTC_sg2.2_", 
                           targetdiff, "_" , 
                           targetrapa))$Estimate, 
     bonferroni_2.2 = get(paste0("restabWGCNA_", 
-                                targetline, "_sgNTC_sg2.2_", 
+                                targetline, "_",refset, "_sgNTC_sg2.2_", 
                                 targetdiff, "_" , 
                                 targetrapa))$padj)
   
   print(restab)
   write.xlsx(restab, file=paste0(output, "/Restab_", 
-                                 targetline,"_", 
+                                 targetline,"_",refset, "_", 
                                  targetdiff, "_",
                                  targetrapa, ".xlsx"))
   SamplesSet=SampleInfo[samplesincl,] %>% select(all_of(hits))
-  EigengenePlot(SamplesSet, SampleInfo, samplesincl)
+  if(plotset){
+  EigengenePlot(SamplesSet, SampleInfo, samplesincl)}
+  
 }
 
 ```
@@ -405,7 +425,7 @@ EigengenePlot(data=SampleInfo[,grep("ME", colnames(SampleInfo))],
 ### D62
 
 ```{r noDIFF_noRAPA_D62}
-getWGCNAoutputs(targetdiff = "noDIFF",targetrapa = "noRAPA")
+getWGCNAoutputs(targetdiff = "noDIFF",targetrapa = "noRAPA", plotset = T)
 
 ```
 
@@ -415,7 +435,7 @@ getWGCNAoutputs(targetdiff = "noDIFF",targetrapa = "noRAPA")
 
 ```{r DIFF_noRAPA_D62}
 
-getWGCNAoutputs(targetline = "D62",targetdiff = "DIFF",targetrapa = "noRAPA")
+getWGCNAoutputs(targetdiff = "DIFF",targetrapa = "noRAPA", plotset = T)
 
 ```
 
@@ -424,7 +444,9 @@ getWGCNAoutputs(targetline = "D62",targetdiff = "DIFF",targetrapa = "noRAPA")
 
 ```{r noDIFF_RAPA_D62}
 
-getWGCNAoutputs(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
+getWGCNAoutputs(targetdiff = "noDIFF",targetrapa = "RAPA", refset = "NTCwRAPA" , plotset = T)
+getWGCNAoutputs(targetdiff = "noDIFF",targetrapa = "RAPA", refset = "NTCnoRAPA" , plotset = T)
+
 
 ```
 ## KO effect in DIFF RAPA
@@ -433,7 +455,8 @@ getWGCNAoutputs(targetline = "D62",targetdiff = "noDIFF",targetrapa = "RAPA")
 
 ```{r DIFF_RAPA_D62}
 
-getWGCNAoutputs(targetline = "D62",targetdiff = "DIFF",targetrapa = "RAPA")
+getWGCNAoutputs(targetdiff = "DIFF",targetrapa = "RAPA", refset = "NTCwRAPA" , plotset = T)
+getWGCNAoutputs(targetdiff = "DIFF",targetrapa = "RAPA", refset = "NTCnoRAPA" , plotset = T)
 
 ```
 
@@ -468,7 +491,7 @@ gostres = getGOresults(Genes_of_interset, gene_univers)
 
 toptab = gostres$result
 
-write.xlsx2(toptab, file = paste0(output,"/D62_GOresWGCNA.xlsx"), sheetName = "GO_enrichment")
+write.xlsx(toptab, file = paste0(output,"/D62_GOresWGCNA.xlsx"), sheetName = "GO_enrichment")
 
 for (module in names(Genes_of_interset)){
   idx = toptab$query==module & grepl("GO", toptab$source)
@@ -482,7 +505,6 @@ for (module in names(Genes_of_interset)){
   }
   print(p)
 }
-
 
 ```
 

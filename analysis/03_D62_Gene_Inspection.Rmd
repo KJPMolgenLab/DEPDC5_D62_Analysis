@@ -10,7 +10,7 @@ output: html_document
 home = getwd()
 ```
 
-# Differentiation mRNA Markers 
+# mRNA Expression of Celllular Markers 
 
 ```{r setup, include=FALSE}
 output= paste0(home, "/output/")
@@ -41,9 +41,9 @@ load(paste0(output,"/D62_dds_matrix.RData"))
 ```
 
 
-## Extensive Gene list 
+## Full Marker list 
 
-```{r plotGOIS, fig.height=15, fig.width=10}
+```{r plotGOIs all markers, fig.height=15, fig.width=8}
 
 SampleInfo = as.data.frame(colData(ddsMat))
 genedata=rowData(ddsMat)
@@ -147,13 +147,13 @@ GOIsEntrez=c(DEPDC5="9681",
              SNCA="6622")
 
 
-geneheatmap(GOIsEntrez,ddsMat,CellID="D62")
+geneheatmap(GOIsEntrez,ddsMat)
 
 ```
 
-## Only Set of top 15 Markers all
+## Set of 15 Cellular Markers
 
-```{r}
+```{r plotGOIs 15 markers, fig.width=8}
 
 GOIsEntrez=c(
   DEPDC5="9681",
@@ -181,24 +181,24 @@ GOIsEntrez=c(
   TH="7054",
   DRD2="1813")
 
-geneheatmap(GOIsEntrez,ddsMat,CellID="D62")
+geneheatmap(GOIsEntrez,ddsMat)
 ```
 
 
-## Only Set of top 15 Markers no DIFFs
+## Cellular Markers Proliferation Subset
 
-```{r}
-geneheatmap(GOIsEntrez,ddsMat[,ddsMat$DIFF=="noDIFF"],CellID="D62")
+```{r plotGOIs 15 markers Proliferation, fig.width=8}
+
+geneheatmap(GOIsEntrez,ddsMat[,ddsMat$DIFF=="noDIFF"])
+
 ```
 
 
+## Cellular Markers Differentation Subset
 
+```{r plotGOIs 15 markers Differentation, fig.width=8}
 
-## Only Set of top 15 Markers DIFFs
-
-```{r}
-
-geneheatmap(GOIsEntrez,ddsMat[,ddsMat$DIFF=="DIFF"],CellID="D62")
+geneheatmap(GOIsEntrez,ddsMat[,ddsMat$DIFF=="DIFF"])
 
 ```
 
