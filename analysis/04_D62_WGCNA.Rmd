@@ -348,7 +348,11 @@ getWGCNAoutputs = function(targetline="D62",targetdiff,
       SampleInfo$KO == "KO"
     samplesincl = samplesincl | (SampleInfo$DIFF==targetdiff &
       SampleInfo$RAPA=="noRAPA" &  
-      SampleInfo$KO == "WT")
+      SampleInfo$KO == "WT")} else {
+        samplesincl=SampleInfo$DIFF==targetdiff &
+      SampleInfo$RAPA==targetrapa
+      }
+  
   
   pvalrep=  get(paste0("restabWGCNA_", 
                        targetline,"_",refset, "_sgNTC_sg2.1_", 
@@ -407,7 +411,7 @@ getWGCNAoutputs = function(targetline="D62",targetdiff,
 
 ## Eigengene plots all modules
 
-```{r}
+```{r fig.width=5, fig.height=3}
 
 EigengenePlot(data=SampleInfo[,grep("ME", colnames(SampleInfo))],
               Sampledata = SampleInfo, 

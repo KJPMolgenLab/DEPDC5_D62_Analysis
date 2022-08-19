@@ -229,8 +229,8 @@ EigengenePlot=function(data, Sampledata, samplesincl){
   Sampledata = Sampledata[samplesincl,]
   data=data[rownames(Sampledata),]
   for (i in colnames(data)){
-    nf=layout(matrix(c(1:5,rep(6,5)),ncol=2),
-              heights = c(12,1,1,1,1),
+    nf=layout(matrix(c(1:4,rep(5,4)),ncol=2),
+              heights = c(12,1,1,1),
               widths = c(10,2))
     par(mar=c(0.2,4.1,3,1))
     lim=max(abs(data[,i]))
@@ -243,14 +243,14 @@ EigengenePlot=function(data, Sampledata, samplesincl){
               col=ann_colors[["RAPA"]][Sampledata[,"RAPA"]], yaxt='n')
     a=barplot(rep(1,length(data[,i])),border = NA,
               col=ann_colors[["DIFF"]][Sampledata[,"DIFF"]], yaxt='n')
-    a=barplot(rep(1,length(data[,i])), border = NA,
-              col=ann_colors[["CellLine"]][Sampledata[,"CellLine"]], yaxt='n')
+    #a=barplot(rep(1,length(data[,i])), border = NA,
+    #          col=ann_colors[["CellLine"]][Sampledata[,"CellLine"]], yaxt='n')
     par(mar=c(0,0,0,0))
     plot.new()
     legend(0,0.5, legend = names(ann_colors[["gRNA"]]),fill = ann_colors[["gRNA"]], xpd=T,bty = "n")
-    legend(0,0.375, legend = names(ann_colors[["RAPA"]]),fill = ann_colors[["RAPA"]], xpd=T,bty = "n")
-    legend(0,0.25, legend = names(ann_colors[["DIFF"]]),fill = ann_colors[["DIFF"]], xpd=T,bty = "n")
-    legend(0,0.125, legend = names(ann_colors[["CellLine"]]),fill = ann_colors[["CellLine"]], xpd=T,bty = "n")
+    legend(0,0.3, legend = names(ann_colors[["RAPA"]]),fill = ann_colors[["RAPA"]], xpd=T,bty = "n")
+    legend(0,0.2, legend = names(ann_colors[["DIFF"]]),fill = ann_colors[["DIFF"]], xpd=T,bty = "n")
+    #legend(0,0.125, legend = names(ann_colors[["CellLine"]]),fill = ann_colors[["CellLine"]], xpd=T,bty = "n")
   }
 }
 
