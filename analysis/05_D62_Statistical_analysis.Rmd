@@ -7,6 +7,10 @@ output: html_document
 
 ```{r}
 home = getwd()
+
+knitr::opts_chunk$set(fig.height=6, fig.width=8)
+
+
 ```
 
 # Statistical analysis 
@@ -26,6 +30,7 @@ library(flashClust)
 library(pheatmap)
 library(limma)
 library(openxlsx)
+library(eulerr)
 
 opts_chunk$set(echo = TRUE, 
                fig.height = 7, 
@@ -335,24 +340,31 @@ getlinmodoutput(targetdiff = "DIFF",targetrapa = "RAPA", refset = "NTCwRAPA" )
 
 
 ```{r custom table for paper}
-
 # with noRAPA NTCF as reference
 
 noDIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA),
                          SYMBOL=rowData(ddsMat)$hgnc,
-                         sg2.1_noDiff_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
-                         sg2.1_noDiff_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$padj,
-                         sg2.2_noDiff_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange,
-                         sg2.2_noDiff_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$padj,
-                         sg2.1_noDiff_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,
-                         sg2.1_noDiff_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,
-                         sg2.2_noDiff_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange,
-                         sg2.2_noDiff_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj, 
-                         sg2.1_noDiff_RAPA_rapantc_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,
-                         sg2.1_noDiff_RAPA_rapantc_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,
-                         sg2.2_noDiff_RAPA_rapantc_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange,
-                         sg2.2_noDiff_RAPA_rapantc_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)
-write.xlsx(noDIFFresults, file=paste0(output, "/noDiff_refnoRAPA_allgenes.xlsx"))
+                         sg2.1_noDIFF_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,
+                         sg2.1_noDIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$padj,
+                         sg2.2_noDIFF_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange,
+                         sg2.2_noDIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$padj,
+                         sgAVG_noDIFF_noRAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange)),
+                         sgAVG_noDIFF_noRAPA_adjP = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$padj)),
+                         sg2.1_noDIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,
+                         sg2.1_noDIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,
+                         sg2.2_noDIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange,
+                         sg2.2_noDIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj, 
+                         sgAVG_noDIFF_RAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange)),
+                         sgAVG_noDIFF_RAPA_adjP = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)),
+                         
+                         sg2.1_noDIFF_RAPA_rapantc_FC=restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,
+                         sg2.1_noDIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,
+                         sg2.2_noDIFF_RAPA_rapantc_FC=restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange,
+                         sg2.2_noDIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj, 
+                         sgAVG_noDIFF_RAPA_rapantc_FC = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange)), 
+                         sgAVG_noDIFF_RAPA_rapantc_adjP = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)))
+
+write.xlsx(noDIFFresults, file=paste0(output, "/noDIFF_refnoRAPA_allgenes.xlsx"))
 
 
 DIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA),
@@ -361,16 +373,195 @@ DIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_
                          sg2.1_DIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA$padj,
                          sg2.2_DIFF_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange,
                          sg2.2_DIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$padj,
+                         sgAVG_DIFF_noRAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange)),
+                         sgAVG_DIFF_noRAPA_adjP = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$padj)),
                          sg2.1_DIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,
                          sg2.1_DIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,
                          sg2.2_DIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange,
                          sg2.2_DIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$padj, 
-                         sg2.1_DIFF_RAPA_rapantc_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,
-                         sg2.1_DIFF_RAPA_rapantc_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,
-                         sg2.2_DIFF_RAPA_rapantc_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange,
-                         sg2.2_DIFF_RAPA_rapantc_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)
-write.xlsx(DIFFresults, file=paste0(output, "/Diff_refnoRAPA_allgenes.xlsx"))
+                         sgAVG_DIFF_RAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange)),
+                         sgAVG_DIFF_RAPA_adjP = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)),
+                         
+                         sg2.1_DIFF_RAPA_rapantc_FC=restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,
+                         sg2.1_DIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,
+                         sg2.2_DIFF_RAPA_rapantc_FC=restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange,
+                         sg2.2_DIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$padj, 
+                         sgAVG_DIFF_RAPA_rapantc_FC = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange)), 
+                         sgAVG_DIFF_RAPA_rapantc_adjP = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)))
+
+
+write.xlsx(DIFFresults, file=paste0(output, "/DIFF_refnoRAPA_allgenes.xlsx"))
+```
+
+
+```{r noDIFF custom table for paper , fig.width=8, fig.height=6}
+noDIFFhits=(noDIFFresults$sg2.1_noDIFF_noRAPA_adjP<=0.05 & 
+              noDIFFresults$sg2.2_noDIFF_noRAPA_adjP<=0.05 &
+              sign(noDIFFresults$sg2.1_noDIFF_noRAPA_FC)==sign(noDIFFresults$sg2.2_noDIFF_noRAPA_FC))
+
+sum(noDIFFhits, na.rm = T)
+sum(noDIFFhits & noDIFFresults$sg2.1_noDIFF_noRAPA_FC>0, na.rm = T)
+sum(noDIFFhits & noDIFFresults$sg2.1_noDIFF_noRAPA_FC<0, na.rm = T)
+
+
+ggplot(data = noDIFFresults[,], aes(sg2.1_noDIFF_noRAPA_FC, sg2.2_noDIFF_noRAPA_FC, col=noDIFFhits)) + 
+  geom_point(pch=16, alpha=0.5) + 
+  geom_abline(slope=1, intercept = 0) + ggtitle("DIFF correlation between KOs")
+
+
+
+## rescued Genes 
+noDIFF_RAPA_nosig = (noDIFFresults$sg2.1_noDIFF_RAPA_adjP>0.05 & noDIFFresults$sg2.2_noDIFF_RAPA_adjP>0.05)
+
+# just necessary to check one KO as significant DEX is defoned that both have to have the same direction 
+
+noDIFF_RAPA_chngsFC = (sign(noDIFFresults$sg2.1_noDIFF_noRAPA_FC) != sign(noDIFFresults$sg2.1_noDIFF_RAPA_FC)) &
+  (sign(noDIFFresults$sg2.1_noDIFF_noRAPA_FC) != sign(noDIFFresults$sg2.2_noDIFF_RAPA_FC))
+  
+
+noDIFFhits_ENTREZ = na.omit(noDIFFresults$ENTREZ_ID[noDIFFhits])
+noDIFFRAPA_RESC_ENTREZ = na.omit(noDIFFresults$ENTREZ_ID[ (noDIFFhits & noDIFF_RAPA_nosig)| (noDIFFhits & noDIFF_RAPA_chngsFC)])
+noDIFFRAPA_noRESC_ENTREZ = noDIFFhits_ENTREZ[! noDIFFhits_ENTREZ %in% noDIFFRAPA_RESC_ENTREZ]
+
+
+GOIs =list(noDIFFRAPA_RESC=noDIFFRAPA_RESC_ENTREZ,
+           noDIFFRAPA_noRESC=noDIFFRAPA_noRESC_ENTREZ)
+
+
+for (n in names(GOIs)){
+  Resall=data.frame()
+  for (gl in names(genelists)){
+    
+    tmp=table(signif=geneids %in% GOIs[[n]], targetgene=geneids %in% genelists[[gl]]$ENTREZ_ID)
+    resfish=fisher.test(tmp)
+    res = c(resfish$estimate, unlist(resfish$conf.int), resfish$p.value)
+    Resall = rbind(Resall, res)
+  }
+  colnames(Resall)=c("OR", "CI95L", "CI95U", "P")
+  rownames(Resall)=names(genelists)
+  Resall$Beta = log(Resall$OR)
+  Resall$SE = (log(Resall$OR)-log(Resall$CI95L))/1.96
+  Resall$Padj=p.adjust(Resall$P, method = "bonferroni")
+  
+  print(Resall)
+  
+  multiORplot(Resall, Pval = "P", Padj = "Padj", beta="Beta",SE = "SE", 
+              pheno=n, xlims=c(-4.5,4.5))
+  
+}
+
+
+gene_univers = rownames(ddsMat)
+  
+gostres = getGOresults(GOIs, gene_univers)
+  
+toptab = gostres$result
+write.xlsx(toptab, file = paste0(output, "/GOres_Rescue_noDIFF.xlsx"), sheetName = "GO_enrichment")
+
+
+fit<- euler(list(PROLIF_DEX=noDIFFhits_ENTREZ,
+                   RAPA_RESC=noDIFFRAPA_RESC_ENTREZ), shape = "ellipse")
+plot(fit,  quantities = TRUE, main="PROLIF rescue")
+
 
 ```
 
+
+
+
+```{r DIFF custom table for paper, fig.width=8, fig.height=6}
+### DIFFERERNTIATION
+
+
+DIFFhits=(DIFFresults$sg2.1_DIFF_noRAPA_adjP<=0.05 & 
+              DIFFresults$sg2.2_DIFF_noRAPA_adjP<=0.05 &
+              sign(DIFFresults$sg2.1_DIFF_noRAPA_FC)==sign(DIFFresults$sg2.2_DIFF_noRAPA_FC))
+
+
+
+sum(DIFFhits, na.rm = T)
+sum(DIFFhits & DIFFresults$sg2.1_DIFF_noRAPA_FC>0, na.rm = T)
+sum(DIFFhits & DIFFresults$sg2.1_DIFF_noRAPA_FC<0, na.rm = T)
+
+
+ggplot(data = DIFFresults[,], aes(sg2.1_DIFF_noRAPA_FC, sg2.2_DIFF_noRAPA_FC, col=DIFFhits)) + 
+  geom_point(pch=16, alpha=0.5) + 
+  geom_abline(slope=1, intercept = 0) + 
+  theme_bw()
+
+
+
+## rescued Genes 
+DIFF_RAPA_nosig = (DIFFresults$sg2.1_DIFF_RAPA_adjP>0.05 & DIFFresults$sg2.2_DIFF_RAPA_adjP>0.05)
+
+# just necessary to check one KO as significant DEX is defoned that both have to have the same direction 
+
+DIFF_RAPA_chngsFC = (sign(DIFFresults$sg2.1_DIFF_noRAPA_FC) != sign(DIFFresults$sg2.1_DIFF_RAPA_FC)) &
+  (sign(DIFFresults$sg2.1_DIFF_noRAPA_FC) != sign(DIFFresults$sg2.2_DIFF_RAPA_FC))
+  
+
+DIFFhits_ENTREZ = na.omit(DIFFresults$ENTREZ_ID[DIFFhits])
+DIFFRAPA_RESC_ENTREZ = na.omit(DIFFresults$ENTREZ_ID[ (DIFFhits & DIFF_RAPA_nosig)| (DIFFhits & DIFF_RAPA_chngsFC)])
+DIFFRAPA_noRESC_ENTREZ = DIFFhits_ENTREZ[! DIFFhits_ENTREZ %in% DIFFRAPA_RESC_ENTREZ]
+
+
+GOIs =list(DIFFRAPA_RESC=DIFFRAPA_RESC_ENTREZ,
+           DIFFRAPA_noRESC=DIFFRAPA_noRESC_ENTREZ)
+
+
+for (n in names(GOIs)){
+  Resall=data.frame()
+  for (gl in names(genelists)){
+    
+    tmp=table(signif=geneids %in% GOIs[[n]], targetgene=geneids %in% genelists[[gl]]$ENTREZ_ID)
+    resfish=fisher.test(tmp)
+    res = c(resfish$estimate, unlist(resfish$conf.int), resfish$p.value)
+    Resall = rbind(Resall, res)
+  }
+  colnames(Resall)=c("OR", "CI95L", "CI95U", "P")
+  rownames(Resall)=names(genelists)
+  Resall$Beta = log(Resall$OR)
+  Resall$SE = (log(Resall$OR)-log(Resall$CI95L))/1.96
+  Resall$Padj=p.adjust(Resall$P, method = "bonferroni")
+  
+  print(Resall)
+  
+  multiORplot(Resall, Pval = "P", Padj = "Padj", beta="Beta",SE = "SE", 
+              pheno=n, xlims=c(-4.5,4.5))
+  
+}
+
+
+gene_univers = rownames(ddsMat)
+  
+gostres = getGOresults(GOIs, gene_univers)
+  
+toptab = gostres$result
+write.xlsx(toptab, file = paste0(output, "/GOres_Rescue_DIFF.xlsx"), sheetName = "GO_enrichment")
+
+
+fit<- euler(list(DIFF_DEX=DIFFhits_ENTREZ,
+                   RAPA_RESC=DIFFRAPA_RESC_ENTREZ), shape = "ellipse")
+plot(fit,  quantities = TRUE, main="DIFF rescue")
+
+
+
+```
+
+
+```{r full overlap, fig.width=8, fig.height=6}
+
+
+allhits = list(DIFF_DEX=DIFFhits_ENTREZ,
+               DIFF_RAPA_RESC=DIFFRAPA_RESC_ENTREZ, 
+               PROLIF_DEX=noDIFFhits_ENTREZ,
+               PROLIF_RAPA_RESC=noDIFFRAPA_RESC_ENTREZ
+)
+
+fit2 <- euler(allhits, shape = "ellipse")
+plot(fit2,  quantities = TRUE, main="Overlap of gene hits")
+
+
+
+```
 
