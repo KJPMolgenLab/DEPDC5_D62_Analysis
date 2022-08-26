@@ -16,7 +16,7 @@ knitr::opts_chunk$set(fig.height=6, fig.width=8)
 # Statistical analysis 
 
 ```{r setup, include=FALSE, echo=F}
-reanalyze=F
+reanalyze=T
 output= paste0(home, "/output/")
 
 source(paste0(home,"/code/custom_functions.R"))

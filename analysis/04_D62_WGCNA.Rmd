@@ -11,7 +11,7 @@ home = getwd()
 
 
 ```{r setup, include=FALSE}
-reanalyze=F
+reanalyze=T
 
 output= paste0(home, "/output/")
 
