@@ -2,6 +2,8 @@
 
 
 ## reconstructs and reanalyses all
+wflow_build("./analysis/*.Rmd")
+
 wflow_publish(c("./*"))
 system("git push -u origin main")
 

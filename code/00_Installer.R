@@ -3,7 +3,7 @@
 
 package<-c("RColorBrewer", "dplyr", "httr", "parallel", "rJava",
            "compareGroups", "kableExtra", "tidyverse","dendextend",
-           "knitr", "pheatmap", "glmpca", "plotly", "rsconnect", "xlsx",
+           "knitr", "pheatmap", "glmpca", "plotly", "rsconnect", "openxlsx",
            "lavaan", "semPlot", "ggplotify", "qqman", "webshot", "M3C",
            "data.table")
 
