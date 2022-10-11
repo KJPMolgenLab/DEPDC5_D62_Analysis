@@ -5,19 +5,19 @@ The here provided code and output data is accompanying information for the follo
 > **The transcriptomic signature of DEPDC5 KO induced mTOR-hyperactivation in human neurons and its response to rapamycin treatment**
 ><br> 
 >Mattson S. O. Jones[^1]<sup>,</sup>[^12], Regina Waltes[^1], Silvia Lindlar[^1], Johannes Ludwig[^1], Evelyn Ullrich[^2]<sup>,</sup>[^3]<sup>,</sup>[^4], Dan Geschwind[^5]<sup>,</sup>[^6]<sup>,</sup>[^7]<sup>,</sup>[^8], Jasmin Hefendehl[^9]<sup>,</sup>[^10], Karl Martin Klein[^11]<sup>,</sup>[^12]<sup>,</sup>[^13], Felix Rosenow[^11]<sup>,</sup>[^12], Denise Haslinger[^1] and Andreas Geburtig-Chiocchetti[^1]<sup>,</sup>[^12] (shared last)
-><br>[^1]:Autism Therapy and Research Center of Excellence, Department of Child and Adolescent Psychiatry, Psychosomatics and Psychotherapy, University Hospital Frankfurt, 60528 Frankfurt am Main, Germany
-><br>[^2]:Experimental Immunology, Children's University Hospital, Goethe University Frankfurt, Frankfurt am Main, Germany
-><br>[^3]:Frankfurt Cancer Institute (FCI), Goethe University Frankfurt, Frankfurt am Main, Germany
-><br>[^4]:German Cancer Consortium (DKTK), Partner Site Frankfurt/Mainz, Frankfurt am Main, Germany
-><br>[^5]:Program in Neurobehavioral Genetics, Department of Psychiatry, Semel Institute, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
-><br>[^6]:Center for Autism Research and Treatment, Semel Institute, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
-><br>[^7]:Program in Neurogenetics, Department of Neurology, Center for Autism Research and Treatment, Semel Institute, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
-><br>[^8]:Department of Human Genetics, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
-><br>[^9]:Institute of Cell Biology and Neuroscience, University of Frankfurt, D-60438 Frankfurt am Main, Germany
-><br>[^10]:Neurovascular Disorders, Buchmann Institute for Molecular Life Sciences, University of Frankfurt, D-60438 Frankfurt am Main, Germany
-><br>[^11]:Epilepsy Center Frankfurt Rhine-Main, Center of Neurology and Neurosurgery, Goethe-University Frankfurt, Schleusenweg 2-16 (Haus 95), 60528, Frankfurt am Main, Germany 
-><br>[^12]:Center for Personalized Translational Epilepsy Research (CePTER), Goethe-University Frankfurt, Frankfurt am Main, Germany
-><br>[^13]:Departments of Clinical Neurosciences, Medical Genetics, and Community Health Sciences, Hotchkiss Brain Institute & Alberta Children's Hospital Research Institute, Cumming School of Medicine, University of Calgary, Calgary, Alberta, Canada
+><br>[^1]: Autism Therapy and Research Center of Excellence, Department of Child and Adolescent Psychiatry, Psychosomatics and Psychotherapy, University Hospital Frankfurt, 60528 Frankfurt am Main, Germany
+><br>[^2]: Experimental Immunology, Children's University Hospital, Goethe University Frankfurt, Frankfurt am Main, Germany
+><br>[^3]: Frankfurt Cancer Institute (FCI), Goethe University Frankfurt, Frankfurt am Main, Germany
+><br>[^4]: German Cancer Consortium (DKTK), Partner Site Frankfurt/Mainz, Frankfurt am Main, Germany
+><br>[^5]: Program in Neurobehavioral Genetics, Department of Psychiatry, Semel Institute, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
+><br>[^6]: Center for Autism Research and Treatment, Semel Institute, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
+><br>[^7]: Program in Neurogenetics, Department of Neurology, Center for Autism Research and Treatment, Semel Institute, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
+><br>[^8]: Department of Human Genetics, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
+><br>[^9]: Institute of Cell Biology and Neuroscience, University of Frankfurt, D-60438 Frankfurt am Main, Germany
+><br>[^10]: Neurovascular Disorders, Buchmann Institute for Molecular Life Sciences, University of Frankfurt, D-60438 Frankfurt am Main, Germany
+><br>[^11]: Epilepsy Center Frankfurt Rhine-Main, Center of Neurology and Neurosurgery, Goethe-University Frankfurt, Schleusenweg 2-16 (Haus 95), 60528, Frankfurt am Main, Germany 
+><br>[^12]: Center for Personalized Translational Epilepsy Research (CePTER), Goethe-University Frankfurt, Frankfurt am Main, Germany
+><br>[^13]: Departments of Clinical Neurosciences, Medical Genetics, and Community Health Sciences, Hotchkiss Brain Institute & Alberta Children's Hospital Research Institute, Cumming School of Medicine, University of Calgary, Calgary, Alberta, Canada
 ><br>(DOI will be posted here)
 
 The manuscript is currently in preparation and will be linked here upon publication
