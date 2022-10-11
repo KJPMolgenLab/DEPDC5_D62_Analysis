@@ -2,9 +2,9 @@
 
 The here provided code and output data is accompanying information for the following research article 
 
->
-**The transcriptomic signature of DEPDC5 KO induced mTOR-hyperactivation in human neurons and its response to rapamycin treatment**
-Mattson S. O. Jones[^1]<sup>,</sup>[^12], Regina Waltes[^1], Silvia Lindlar[^1], Johannes Ludwig[^1], Evelyn Ullrich[^2]<sup>,</sup>[^3]<sup>,</sup>[^4], Dan Geschwind[^5]<sup>,</sup>[^6]<sup>,</sup>[^7]<sup>,</sup>[^8], Jasmin Hefendehl[^9]<sup>,</sup>[^10], Karl Martin Klein[^11]<sup>,</sup>[^12]<sup>,</sup>[^13], Felix Rosenow[^11]<sup>,</sup>[^12], Denise Haslinger[^1] and Andreas Geburtig-Chiocchetti[^1]<sup>,</sup>[^12] (shared last)<br>*The manuscript is currently in preparation and will be linked here upon publication; DOI will be provided*
+
+>**The transcriptomic signature of DEPDC5 KO induced mTOR-hyperactivation in human neurons and its response to rapamycin treatment**
+>Mattson S. O. Jones[^1]<sup>,</sup>[^12], Regina Waltes[^1], Silvia Lindlar[^1], Johannes Ludwig[^1], Evelyn Ullrich[^2]<sup>,</sup>[^3]<sup>,</sup>[^4], Dan Geschwind[^5]<sup>,</sup>[^6]<sup>,</sup>[^7]<sup>,</sup>[^8], Jasmin Hefendehl[^9]<sup>,</sup>[^10], Karl Martin Klein[^11]<sup>,</sup>[^12]<sup>,</sup>[^13], Felix Rosenow[^11]<sup>,</sup>[^12], Denise Haslinger[^1] and Andreas Geburtig-Chiocchetti[^1]<sup>,</sup>[^12] (shared last)<br>*The manuscript is currently in preparation and will be linked here upon publication; DOI will be provided*
 
 
 All analyses were organized using the [*workflowr*](https://github.com/workflowr/workflowr) package. 
