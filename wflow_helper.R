@@ -9,9 +9,9 @@ system("git push -u origin main")
 
 
 ## just the changed parts
-wflow_build()
+wflow_build("./analysis/*.Rmd", republish=T)
 system("git add ./*")
-system("git commit -a -m \"full analysis pre manuscript version\"")
+system("git commit -a -m \"rerun full analysis, update outputs\"")
 system("git push -u origin main")
 
 

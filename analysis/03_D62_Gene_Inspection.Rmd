@@ -6,13 +6,11 @@ output: html_document
 ---
 
 
-```{r}
-home = getwd()
-```
-
 # mRNA Expression of Celllular Markers 
 
 ```{r setup, include=FALSE}
+
+home = getwd()
 output= paste0(home, "/output/")
 
 source(paste0(home,"/code/custom_functions.R"))
@@ -30,7 +28,6 @@ opts_chunk$set(echo = TRUE,
                fig.align='center',
                dpi=500
 )
-
 
 ```
 

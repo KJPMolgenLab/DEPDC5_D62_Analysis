@@ -5,13 +5,11 @@ date: "22 3 2021"
 output: html_document
 ---
 
-```{r}
+
+```{r include=FALSE}
 home = getwd()
-```
 
-
-```{r setup, include=FALSE}
-reanalyze=T
+reanalyze=F
 
 output= paste0(home, "/output/")
 
@@ -170,7 +168,7 @@ colors_new = MEList_new$colors
 mcols(ddsMat) = cbind(mcols(ddsMat)%>% as.data.frame() %>% select(-contains("cluster")), data.frame(cluster=colors_new)) %>% DataFrame()
 
 
-save(ddsMat, file=paste0(output,"/D62_dds_matrix.RData"))
+
 
 ```
 
@@ -511,4 +509,10 @@ for (module in names(Genes_of_interset)){
 }
 
 ```
+
+```{r}
+save(ddsMat, file=paste0(output,"/D62_dds_matrix.RData"))
+
+```
+
 

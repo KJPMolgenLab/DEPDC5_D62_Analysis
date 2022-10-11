@@ -6,16 +6,14 @@ output: html_document
 ---
 
 
-```{r}
-home = getwd()
-```
-
 ```{r setup, include=FALSE, echo=FALSE}
+
+home = getwd()
+
 secret="C:/Users/andreas_chiocchetti/OneDrive/personal/fuchs_credentials.R"
 
 
 output= paste0(home, "/output/")
-source(paste0(home,"/code/00_Installer.R")) # installs packges if needed
 source(paste0(home,"/code/custom_functions.R")) #also defines colors
 
 library(knitr)
