@@ -16,7 +16,7 @@ knitr::opts_chunk$set(fig.height=6, fig.width=8)
 # Statistical analysis 
 
 ```{r setup, include=FALSE, echo=F}
-reanalyze=T
+reanalyze=F
 output= paste0(home, "/output/")
 
 source(paste0(home,"/code/custom_functions.R"))
@@ -363,8 +363,13 @@ noDIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noD
                          sg2.2_noDIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj, 
                          sgAVG_noDIFF_RAPA_rapantc_FC = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange)), 
                          sgAVG_noDIFF_RAPA_rapantc_adjP = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)))
+for(i in names(genelists)){
+ noDIFFresults[,i] <- noDIFFresults$ENTREZ_ID %in% genelists[[i]]$ENTREZ_ID
+}
 
 write.xlsx(noDIFFresults, file=paste0(output, "/noDIFF_refnoRAPA_allgenes.xlsx"))
+
+lm(noDIFFresults$sgAVG_noDIFF_noRAPA_FC~noDIFFresults$sgAVG_noDIFF_RAPA_FC) %>% summary()
 
 
 DIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA),
@@ -389,8 +394,16 @@ DIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_
                          sgAVG_DIFF_RAPA_rapantc_FC = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange)), 
                          sgAVG_DIFF_RAPA_rapantc_adjP = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)))
 
+for(i in names(genelists)){
+ DIFFresults[,i] <- DIFFresults$ENTREZ_ID %in% genelists[[i]]$ENTREZ_ID
+}
+
 
 write.xlsx(DIFFresults, file=paste0(output, "/DIFF_refnoRAPA_allgenes.xlsx"))
+
+# check if the same genes are differentially reguatled 
+lm(DIFFresults$sgAVG_DIFF_noRAPA_FC~DIFFresults$sgAVG_DIFF_RAPA_FC) %>% summary()
+
 ```
 
 
@@ -560,8 +573,6 @@ allhits = list(DIFF_DEX=DIFFhits_ENTREZ,
 
 fit2 <- euler(allhits, shape = "ellipse")
 plot(fit2,  quantities = TRUE, main="Overlap of gene hits")
-
-
 
 ```
 
