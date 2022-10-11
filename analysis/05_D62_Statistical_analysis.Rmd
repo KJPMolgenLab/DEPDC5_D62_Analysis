@@ -576,3 +576,19 @@ plot(fit2,  quantities = TRUE, main="Overlap of gene hits")
 
 ```
 
+```{r pdf_figures_for_publication}
+
+library(ggpubr)
+pdf(paste0(home,"/output/figure1.pdf"))
+coldata=as.data.frame(colData(ddsMat))
+
+A=ggplot(coldata, aes(gRNA, MEbrown, fill=KO), palette="jco") +
+  geom_boxplot()+facet_grid(RAPA~DIFF, scales="free", drop = T)+theme_bw()
+B=ggplot(coldata, aes(gRNA, MEblack, fill=KO)) +
+  geom_boxplot()+facet_grid(RAPA~DIFF, scales="free", drop = T)+theme_bw()
+
+ggpubr::ggarrange(A,B, labels = c("A", "B"))
+
+dev.off()
+
+`````
