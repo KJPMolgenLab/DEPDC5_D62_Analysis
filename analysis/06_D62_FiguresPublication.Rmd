@@ -1,0 +1,307 @@
+---
+title: "Figures"
+author: "Chioccheti AG"
+date: "2022-10-12"
+output: html_document
+---
+```{r}
+home = getwd()
+
+knitr::opts_chunk$set(fig.height=6, fig.width=8, echo = TRUE)
+
+
+```
+
+```{r setup, include=FALSE}
+library(ggpubr)
+library(ggplot2)
+library(ggplotify)
+library(DESeq2)
+library(openxlsx)
+```
+
+
+```{r load}
+output = paste0(home, "/output/")
+
+source(paste0(home,"/code/custom_functions.R"))
+
+#load and prepare data
+load(paste0(output,"/D62_dds_matrix.RData"))
+
+genelists=lapply(list.files(paste0(home,"/data/genelists_to_test"), full.names = T), 
+                 function(x){read.table(x, header=T)})
+coldata=as.data.frame(colData(ddsMat))
+metadata = mcols(ddsMat) %>% as.data.frame()
+coldata$DIFF = factor(coldata$DIFF, levels = c("DIFF", "noDIFF"), labels = c("DIFF", "PROLIF"))
+coldata$DIFF = relevel(coldata$DIFF, ref = "PROLIF")
+
+logreads = log2(counts(ddsMat, normalized=T)+1)
+
+
+GOresWGCNA = read.xlsx("./output/D62_GOresWGCNA.xlsx", sheet = "GO_enrichment")
+
+prolif_dex_results = read.xlsx("./output/noDiff_refnoRAPA_allgenes.xlsx")
+prolifGO_results= read.xlsx("./output/GOres_D62noDIFFnoRAPA.xlsx")
+diff_dex_results = read.xlsx("./output/Diff_refnoRAPA_allgenes.xlsx")
+diffGO_results= read.xlsx("./output/GOres_D62DIFFnoRAPA.xlsx")
+
+
+
+
+names(genelists) = gsub(".txt", "", list.files(paste0(home,"/data/genelists_to_test")))
+
+```
+
+
+```{r}
+recolor = function(p){ 
+  g = ggplot_gtable(ggplot_build(p))
+  stripr <- which(grepl('strip-r', g$layout$name))
+  stript <- which(grepl('strip-t', g$layout$name))
+  fillsr <- brewer.pal(3,"Set1")[1:2]
+  fillst <- brewer.pal(3,"Set2")[1:2]
+  k <- 1
+  for (i in stripr) {
+    j <- which(grepl('rect', g$grobs[[i]]$grobs[[1]]$childrenOrder))
+    g$grobs[[i]]$grobs[[1]]$children[[j]]$gp$fill <- fillsr[k]
+    k <- k+1
+  }
+  k <- 1
+  for (i in stript) {
+    j <- which(grepl('rect', g$grobs[[i]]$grobs[[1]]$childrenOrder))
+    g$grobs[[i]]$grobs[[1]]$children[[j]]$gp$fill <- fillst[k]
+    k <- k+1
+  }
+  return(g)
+}
+
+
+plotORs = function(geneids, hits, title){
+  Resall=data.frame()
+  
+  for (gl in names(genelists)){
+    tmp=table(signif=geneids %in% hits, targetgene=geneids %in% genelists[[gl]]$ENTREZ_ID)
+    resfish=fisher.test(tmp)
+    res = c(resfish$estimate, unlist(resfish$conf.int), resfish$p.value)
+    Resall = rbind(Resall, res)
+  }
+  colnames(Resall)=c("OR", "CI95L", "CI95U", "P")
+  rownames(Resall)=names(genelists)
+  Resall$Beta = log(Resall$OR)
+  Resall$SE = (log(Resall$OR)-log(Resall$CI95L))/1.96
+  Resall$Padj=p.adjust(Resall$P, method = "bonferroni")
+  
+  Resall$label=rownames(Resall) 
+  Resall$label <- factor(Resall$label, levels=rev(Resall$label))
+  
+  starpval=convertpvaltostars(Resall$P)
+  starpval[Resall$Padj<0.05] ="adj.p**"
+  starpval[is.na(Resall$Beta)]="n.a."
+  Resall$starpval = starpval
+  
+  p= ggplot(Resall, aes(x=label, y=Beta, ymin=Beta-SE, ymax=Beta+SE))+
+    geom_pointrange(aes(color=starpval)) + geom_hline(yintercept = 0, lty=2) +
+    scale_color_viridis_d(limits=c("", "*", "**", "adj.p**"), end = 0.8)+
+    coord_flip() + xlab("Genelist")+ylab(expression(log(OR)+-"95%CI"))+theme_bw()+
+    ylim(-2.5, 2.5)+guides(color=guide_legend(title="P-value"))
+  
+  return (p)
+  
+}
+
+
+```
+
+
+```{r Figure1}
+
+
+brown_ME=ggplot(coldata, aes(gRNA, MEbrown, fill=gRNA)) +
+  geom_boxplot()+facet_grid(DIFF~RAPA, scales="fixed", drop = T)+theme_bw()+ylab("Eigengenevalue")+
+  scale_fill_manual(values=c(Dark8[2:4]))+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  ggtitle("brown")+ theme(plot.title = element_text(hjust = 0.5))
+
+
+brown_ME=recolor(brown_ME)
+
+
+module = "brown"  
+idx = GOresWGCNA$query==module & grepl("GO:BP", GOresWGCNA$source)
+if(!any(idx)){
+  p= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                         label = "no significant GO term") + 
+    ggtitle(module)+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+} else {
+  p=GOplot(GOresWGCNA[idx, ], 10, Title =module, ylabel = "GO terms")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+brown_GO=p
+
+idx = GOresWGCNA$query==module & grepl("TF", GOresWGCNA$source)
+if(!any(idx)){
+  p= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                         label = "no significant TFs") + 
+    ggtitle(module)+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+} else {
+  p=GOplot(GOresWGCNA[idx, ], 10, Title =module, ylabel = "Transcription factors")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+brown_TF=p
+
+brown_OR = plotORs(geneids = rownames(metadata), hits = rownames(metadata)[metadata$cluster=="brown"], title = "brown")
+
+black_ME=ggplot(coldata, aes(gRNA, MEblack, fill=gRNA)) +
+  geom_boxplot()+facet_grid(DIFF~RAPA, scales="free", drop = T)+theme_bw()+ylab("Eigengenevalue")+
+  scale_fill_manual(values=c(Dark8[2:4]))+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  ggtitle("black")+ theme(plot.title = element_text(hjust = 0.5))
+black_ME = recolor(black_ME)
+
+module = "black"  
+idx = GOresWGCNA$query==module & grepl("GO:BP", GOresWGCNA$source)
+if(!any(idx)){
+  p= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                         label = "no significant GO term") + 
+    ggtitle(module)+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+} else {
+  p=GOplot(GOresWGCNA[idx, ], 10, Title =module, ylabel = "GO terms")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+black_GO=p
+
+idx = GOresWGCNA$query==module & grepl("TF", GOresWGCNA$source)
+if(!any(idx)){
+  p= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                         label = "no significant TFs") + 
+    ggtitle(module)+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))+ylab("Transcription factors")
+} else {
+  p=GOplot(GOresWGCNA[idx, ], 10, Title =module, ylabel = "Transcription factors")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+black_TF=p
+black_OR = plotORs(geneids = rownames(metadata), hits = rownames(metadata)[metadata$cluster=="black"], title = "brown")
+
+X = ggplot() + theme_void()
+
+pdf(paste0(home,"/output/figure1.pdf"), width = 12, height = 15)
+ggpubr::ggarrange(
+  brown_ME, X, black_ME,
+  X,  X,  X, 
+  brown_GO,  X, black_GO,
+  X,  X,  X, 
+  brown_TF,  X, black_TF,
+  X,  X,  X, 
+  brown_OR,  X, black_OR, 
+  labels = c("A", "", "E","", "", "",  "B", "", "F", "", "", "", "C", "", "G","", "", "",  "D", "", "H"), 
+  ncol = 3, nrow = 7 ,widths = c(1,0.1,1), heights = c(0.8, 0.1, 1, 0.1, 1, 0.1, 1.2))
+dev.off()
+
+```
+
+
+
+```{r Figure 2 and 3}
+
+# create plots 
+
+prolif_heatmap = geneheatmap(GOIsEntrez = prolif_dex_results$ENTREZ_ID[which(prolif_dex_results$REPLICATED)],
+                             exprobj = ddsMat[,ddsMat$DIFF=="noDIFF"], 
+                             hm.cluster_rows = T, 
+                             hm.scale = "row",  
+                             annotation_row_labels = rev(c(15,20, 24)), 
+                             annotation_row_names = rev(c("DEPDC5_KO_dr", "Epilepsy", "ASD")), 
+                             # index of genelist to plot
+                             title = "PROLIF DEX") %>% as.ggplot(hjust = .1)
+  
+idx = grepl("GO:BP", prolifGO_results$source)
+prolif_GOplot=GOplot(prolifGO_results[idx, ], 10, Title="PROLIF DEX", ylabel = "GO terms")+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+idx = grepl("TF", prolifGO_results$source)
+if(!any(idx)){
+  prolif_TFplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                                     label = "no significant TF") + 
+    ggtitle("PROLIF DEX")+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+} else {
+  prolif_TFplot=GOplot(prolifGO_results[idx, ], 10, Title="PROLIF DEX", ylabel = "Transcription Factors")+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+prolif_OR = plotORs(geneids = rownames(metadata), 
+                    hits = prolif_dex_results$ENTREZ_ID[prolif_dex_results$REPLICATED], 
+                    title = "PROLIF DEX")
+
+diff_heatmap = geneheatmap(GOIsEntrez = diff_dex_results$ENTREZ_ID[which(diff_dex_results$REPLICATED)],
+                           exprobj = ddsMat[,ddsMat$DIFF=="DIFF"], 
+                           hm.cluster_rows = T, 
+                           hm.scale = "row", 
+                           annotation_row_labels = rev(c(15,20,24)), 
+                           annotation_row_names = rev(c("DEPDC5_KO_dr", "Epilepsy", "ASD")),
+                           title = "DIFF DEX") %>% as.ggplot(hjust = .1)
+
+idx = grepl("GO:BP", diffGO_results$source)
+diff_GOplot=GOplot(diffGO_results[idx, ], 10, Title="DIFF DEX", ylabel = "GO terms")+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+idx = grepl("TF", diffGO_results$source)
+diff_TFplot=GOplot(diffGO_results[idx, ], 10, Title="DIFF DEX", ylabel = "Transcription Factors")+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+diff_OR = plotORs(geneids = rownames(metadata), 
+                  hits = diff_dex_results$ENTREZ_ID[diff_dex_results$REPLICATED], 
+                  title = "DIFF DEX")
+
+
+pdf("./output/figure2.pdf", width = 12, height = 15)
+ggarrange(
+  prolif_heatmap,X, diff_heatmap, 
+  X,  X,  X, 
+  prolif_GOplot,X, diff_GOplot, 
+  X,  X,  X, 
+  prolif_TFplot,X, diff_TFplot, 
+  X,  X,  X, 
+  prolif_OR, X, diff_OR,
+  labels = c("A", "", "E","", "", "",  "B", "", "F", "", "", "", "C", "", "G","", "", "",  "D", "", "H"), 
+  ncol = 3, nrow = 7, widths = c(1, 0.1, 1), heights = c(1.5, 0.1, 1, 0.1, 1, 0.1, 1.3))
+dev.off()
+
+```
+
+
+
+```{r Supplementary Figure 2}
+
+any(rownames(logreads) != prolif_dex_results$ENTREZ_ID)
+
+prolif_dex_results$replicated=prolif_dex_results$sg2.1_noDIFF_noRAPA_adjP<=0.05 & 
+  prolif_dex_results$sg2.2_noDIFF_noRAPA_adjP<=0.05 & # both significant
+  prolif_dex_results$sg2.1_noDIFF_noRAPA_FC*prolif_dex_results$sg2.2_noDIFF_noRAPA_FC>0 # both in same direction 
+
+prolif_dex_results = prolif_dex_results[order(prolif_dex_results$replicated),]
+
+replplot_prolif = ggplot(prolif_dex_results, aes(x=-log10(sg2.1_noDIFF_noRAPA_adjP), y=-log10(sg2.2_noDIFF_noRAPA_adjP), color=replicated))+geom_point()+scale_color_brewer(palette="Dark2")+
+  theme_bw()+ ylab(expression("PROLIF KO Dep"[2.1]~-log[10](adj.P)))+ xlab(expression("PROLIF KO Dep"[2.2]~-log[10](adj.P)))
+
+
+diff_dex_results$replicated=diff_dex_results$sg2.1_DIFF_noRAPA_adjP<=0.05 & 
+  diff_dex_results$sg2.2_DIFF_noRAPA_adjP<=0.05 & # both significant
+  diff_dex_results$sg2.1_DIFF_noRAPA_FC*diff_dex_results$sg2.2_DIFF_noRAPA_FC>0 # both in same direction 
+
+diff_dex_results = diff_dex_results[order(diff_dex_results$replicated),]
+diff_dex_results = diff_dex_results[complete.cases(diff_dex_results),]
+
+replplot_diff = ggplot(diff_dex_results, aes(x=-log10(sg2.1_DIFF_noRAPA_adjP), y=-log10(sg2.2_DIFF_noRAPA_adjP), color=replicated))+
+  geom_point()+scale_color_brewer(palette="Dark2")+
+  theme_bw()+ ylab(expression("DIFF KO Dep"[2.1]~-log[10](adj.P)))+ xlab(expression("DIFF KO Dep"[2.2]~-log[10](adj.P)))
+
+
+
+```
+
+

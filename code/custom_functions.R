@@ -71,11 +71,12 @@ comparison <- function(dds_object, samples, target, randomeffect){
 }
 
 # go profiler function
-getGOresults = function(geneset, genereference){
+getGOresults = function(geneset, genereference, evcodes=FALSE){
   require(gprofiler2)
   resgo = gost(geneset, organism = "hsapiens",
                correction_method = "gSCS",
                domain_scope = "custom",
+               evcodes=evcodes,
                sources = c("GO:BP", "GO:MF", "GO:CC", "KEGG", "TF", "HP", "HPA"),
                custom_bg = genereference,
                numeric_ns = "ENTREZGENE_ACC")
@@ -88,7 +89,7 @@ getGOresults = function(geneset, genereference){
 }
 
 
-GOplot = function(GOtable, N, Title="GO plot"){
+GOplot = function(GOtable, N, Title="GO plot", ylabel="GO term"){
   if(nrow(GOtable)<N){N=nrow(GOtable)}
   GOtable = GOtable[GOtable$parents!="character(0)",]
   Tabtoplot=GOtable[order(GOtable$p_value, decreasing = F)[1:N],]
@@ -110,20 +111,31 @@ GOplot = function(GOtable, N, Title="GO plot"){
   ggplot(Tabtoplot) + geom_point(aes(x =log10pvalue,
                                      y = N:1,
                                      size=precision,
-                                     colour=genperc),
-                                 alpha=0.7) +
-    scale_colour_gradient(low="#00FF33", high ="#FF0000", guide = "colourbar")+
-    labs(colour="genomic cov", size="precision")+
-    xlab("- log10(p-value)") + ylab("GO term")+
-    scale_size(range = c(3, 8))+
+                                     colour=genperc)) +
+    scale_color_viridis_c(limits = c(0,0.05))+
+    labs(fill="genomic cov", size="precision")+
+    xlab("- log10(p-value)") + ylab(ylabel)+
+    scale_size_area(limits=c(0,1))+
     theme_bw(base_size = 12) + ggtitle(Title)+
     theme(plot.title = element_text(hjust = 0.5))+
     scale_y_continuous(breaks=N:1,
-                       labels=Tabtoplot$term_name)
+                       labels=Tabtoplot$term_name)+
+    guides(size = guide_legend(order = 2),
+           colour = guide_colorsteps(order = 1, barheight = 4))+
+    xlim(0,15)
+
 }
 
-geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL){
+
+geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL,
+                     hm.cluster_rows = F,
+                     hm.cluster_cols = F,
+                     hm.scale="none",
+                     annotation_row_labels = NA,
+                     annotation_row_names = NA,
+                     title = "log(count+1) gene expression"){
   CellIDorig=CellID
+  SampleInfo = colData(exprobj) %>% as.data.frame()
 
   if(is.null(CellIDorig)){
     CellID = unique(SampleInfo$CellLine)
@@ -131,6 +143,9 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL){
     CellID = CellIDorig
   }
 
+
+  if(length(names(GOIsEntrez))==0)
+    names(GOIsEntrez) = as.character(GOIsEntrez)
 
   idx = match(GOIsEntrez, rownames(exprobj))
   log_2cpm=log2(counts(exprobj, normalize=T)+1)
@@ -145,7 +160,7 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL){
   rownames(dataset) = names(GOIsEntrez)
 
   #colors for plotting heatmap
-  colors <- rev(colorRampPalette(brewer.pal(9, "Spectral"))(255))
+  colors <- scales::viridis_pal()(255)
 
 
   gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
@@ -164,29 +179,49 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL){
 
   if(is.null(CellIDorig)){
   labels = SampleInfo[match(colnames(dataset), SampleInfo$label_rep),
-                      c("gRNA","DIFF", "RAPA")]
+                      c("RAPA", "gRNA", "DIFF")]
   } else {
 
   labels = SampleInfo[match(colnames(dataset), SampleInfo$label_rep),
-                      c("gRNA","DIFF", "RAPA", "CellLine")]
+                      c("RAPA", "gRNA", "DIFF",  "CellLine")]
   }
+  rownames(labels)=colnames(dataset)
+  labels = labels[order(as.numeric(labels$RAPA), as.numeric(labels$gRNA)),]
 
   labels = labels %>% mutate_all(as.character) %>% as.data.frame()
 
+  #annotation_row_labels = c(15,20,24)
+  tmp_annr = annotation_row_labels
+
+  if(any(!is.na(annotation_row_labels))){
+    for(i in annotation_row_labels){
+      ann_colors[[colnames(mcols(exprobj))[i]]] = c("TRUE"="#000000", "FALSE"="#CCCCCC")
+    }
+    annotation_row_labels = mcols(exprobj)[rownames(dataset),annotation_row_labels] %>% as.data.frame()
+    annotation_row_labels=annotation_row_labels %>% mutate_all(as.factor) %>% as.data.frame()
+
+  }
+
+  if(any(!is.na(annotation_row_names))){
+    names(ann_colors) = c("DIFF", "RAPA", "gRNA", annotation_row_names)
+    colnames(annotation_row_labels)=annotation_row_names
+  }
 
 
-  rownames(labels)=colnames(dataset)
 
-  pheatmap(dataset,
+  pheatmap(dataset[,rownames(labels)],
+           show_rownames = F,
+           show_colnames = F,
            border_color = NA,
-           cluster_rows = F,
-           cluster_cols = F,
+           cluster_rows = hm.cluster_rows,
+           cluster_cols = hm.cluster_cols,
            col = colors,
            fontsize=8,
-           scale = "none",
+           scale = hm.scale,
            annotation_col = labels,
+           annotation_row = annotation_row_labels,
            annotation_colors = ann_colors,
-           main="log(count+1) gene expression")
+           main=title)
 
 }
 

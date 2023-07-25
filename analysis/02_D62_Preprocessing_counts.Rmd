@@ -328,7 +328,7 @@ rownames(gpca.dat) = SampleInfo$labels
 mds = as.data.frame(SampleInfo) %>% cbind(cmdscale(distance))
 mds$Growth_cond = paste(SampleInfo$DIFF, SampleInfo$RAPA, sep="_")
 
-save(mds, gpca.dat, file=paste0(home, "/analysis/MDSplots/D62_mdsplots.RData"))
+save(mds, gpca.dat, file=paste0(home, "/output/D62_mdsplots.RData"))
 
 ggplot(gpca.dat, aes(x = dim1, y = dim2, color = gRNA, 
                      shape = Growth_cond)) +

@@ -489,7 +489,7 @@ gene_univers = rownames(ddsMat)
 
 Genes_of_interset = split(rownames(ddsMat), mcols(ddsMat)$cluster)
 
-gostres = getGOresults(Genes_of_interset, gene_univers)
+gostres = getGOresults(Genes_of_interset, gene_univers, evcodes = T)
 
 toptab = gostres$result
 
