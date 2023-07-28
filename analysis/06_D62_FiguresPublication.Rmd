@@ -47,7 +47,10 @@ diff_dex_results = read.xlsx("./output/Diff_refnoRAPA_allgenes.xlsx")
 diffGO_results= read.xlsx("./output/GOres_D62DIFFnoRAPA.xlsx")
 
 
+Rescue_PROLIF_GO_results= read.xlsx("./output/GOres_Rescue_noDIFF.xlsx")
+Rescue_DIFF_GO_results= read.xlsx("./output/GOres_Rescue_DIFF.xlsx")
 
+load(file = "./output/RescueGenelists.RData")
 
 names(genelists) = gsub(".txt", "", list.files(paste0(home,"/data/genelists_to_test")))
 
@@ -100,11 +103,20 @@ plotORs = function(geneids, hits, title){
   starpval[is.na(Resall$Beta)]="n.a."
   Resall$starpval = starpval
   
-  p= ggplot(Resall, aes(x=label, y=Beta, ymin=Beta-SE, ymax=Beta+SE))+
+  cis = data.frame(Resall$Beta-1.96*Resall$SE, Resall$Beta+1.96*Resall$SE)
+  cis[is.na(cis[1]), 1]=-Inf
+  cis[is.na(cis[2]), 2]=Inf
+  
+  Resall$CIlinmin = apply(cis, 1, min)
+  Resall$CIlinmax = apply(cis, 1, max)
+  
+  
+  p= ggplot(Resall, aes(x=label, y=Beta, ymin=CIlinmin, ymax=CIlinmax))+
     geom_pointrange(aes(color=starpval)) + geom_hline(yintercept = 0, lty=2) +
-    scale_color_viridis_d(limits=c("", "*", "**", "adj.p**"), end = 0.8)+
-    coord_flip() + xlab("Genelist")+ylab(expression(log(OR)+-"95%CI"))+theme_bw()+
-    ylim(-2.5, 2.5)+guides(color=guide_legend(title="P-value"))
+    scale_color_viridis_d(limits=c("", "*", "**", "adj.p**"), end = 0.8)+ 
+    coord_flip(ylim=c( -2.5, 2.5)) + xlab("Genelist")+ylab(expression(log(OR) %+-% "95%CI"))+theme_bw()+
+  guides(color=guide_legend(title="P-value"))+ggtitle(title)
+  
   
   return (p)
   
@@ -114,7 +126,7 @@ plotORs = function(geneids, hits, title){
 ```
 
 
-```{r Figure1}
+```{r Figure1, fig.width = 12, fig.height = 15}
 
 
 brown_ME=ggplot(coldata, aes(gRNA, MEbrown, fill=gRNA)) +
@@ -187,8 +199,9 @@ black_OR = plotORs(geneids = rownames(metadata), hits = rownames(metadata)[metad
 
 X = ggplot() + theme_void()
 
-pdf(paste0(home,"/output/figure1.pdf"), width = 12, height = 15)
-ggpubr::ggarrange(
+
+
+finplot = ggpubr::ggarrange(
   brown_ME, X, black_ME,
   X,  X,  X, 
   brown_GO,  X, black_GO,
@@ -198,13 +211,21 @@ ggpubr::ggarrange(
   brown_OR,  X, black_OR, 
   labels = c("A", "", "E","", "", "",  "B", "", "F", "", "", "", "C", "", "G","", "", "",  "D", "", "H"), 
   ncol = 3, nrow = 7 ,widths = c(1,0.1,1), heights = c(0.8, 0.1, 1, 0.1, 1, 0.1, 1.2))
+
+
+pdf(paste0(home,"./docs/Publication_figure1.pdf"), width = 12, height = 15)
+finplot
 dev.off()
+
+ggsave("./docs/Publication_figure1.svg", finplot, width = 10, height = 13)
+
+
 
 ```
 
 
 
-```{r Figure 2 and 3}
+```{r Figure 2}
 
 # create plots 
 
@@ -258,8 +279,7 @@ diff_OR = plotORs(geneids = rownames(metadata),
                   title = "DIFF DEX")
 
 
-pdf("./output/figure2.pdf", width = 12, height = 15)
-ggarrange(
+finplot = ggarrange(
   prolif_heatmap,X, diff_heatmap, 
   X,  X,  X, 
   prolif_GOplot,X, diff_GOplot, 
@@ -269,9 +289,149 @@ ggarrange(
   prolif_OR, X, diff_OR,
   labels = c("A", "", "E","", "", "",  "B", "", "F", "", "", "", "C", "", "G","", "", "",  "D", "", "H"), 
   ncol = 3, nrow = 7, widths = c(1, 0.1, 1), heights = c(1.5, 0.1, 1, 0.1, 1, 0.1, 1.3))
+
+
+pdf(paste0(home,"./docs/Publication_figure2.pdf"), width = 12, height = 15)
+finplot
 dev.off()
 
+ggsave("./docs/Publication_figure2.svg", finplot, width = 10, height = 13)
+
+
+
 ```
+
+```{r Figure 3, fig.width= 10, fig.height=15}
+idxnoresc = grepl("GO:BP", Rescue_PROLIF_GO_results$source) & grepl("RAPA_noRESC", Rescue_PROLIF_GO_results$query) 
+idxresc = grepl("GO:BP", Rescue_PROLIF_GO_results$source) & grepl("RAPA_RESC", Rescue_PROLIF_GO_results$query) 
+
+
+PROLIF_GO_BP_RESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxresc, ], 10, Title="PROLIF RAPA RESC", ylabel = "GO terms")+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+
+PROLIF_GO_BP_noRESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxnoresc, ], 10, Title="PROLIF RAPA noRESC", ylabel = "GO terms")+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+
+idxnoresc = grepl("TF", Rescue_PROLIF_GO_results$source) & grepl("RAPA_noRESC", Rescue_PROLIF_GO_results$query) 
+idxresc = grepl("TF", Rescue_PROLIF_GO_results$source) & grepl("RAPA_RESC", Rescue_PROLIF_GO_results$query) 
+
+if(!any(idxresc)){
+  PROLIF_GO_TF_RESC_GOplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                                     label = "no significant TF") + 
+    ggtitle("PROLIF RAPA RESC")+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+  } else {
+    PROLIF_GO_TF_RESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxresc, ], 10, Title="PROLIF RAPA RESC", ylabel = "Transcription Factors")+ 
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  }
+
+
+if(!any(idxnoresc)){
+  PROLIF_GO_TF_noRESC_GOplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                                     label = "no significant TF") + 
+    ggtitle("PROLIF RAPA noRESC")+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+  } else {
+    PROLIF_GO_TF_noRESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxnoresc, ], 10, Title="PROLIF RAPA noRESC", ylabel = "Transcription Factors")+ 
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  }
+
+PROLIF_GO_BP_RESC_ORplot =  plotORs(geneids = rownames(metadata), 
+                  hits = Rescue_Genelist[["PROLIF"]][["noDIFFRAPA_RESC"]], 
+                  title = "PROLIF RAPA RESC")
+PROLIF_GO_BP_noRESC_ORplot =  plotORs(geneids = rownames(metadata), 
+                  hits = Rescue_Genelist[["PROLIF"]][["noDIFFRAPA_noRESC"]], 
+                  title = "PROLIF RAPA noRESC")
+```
+
+```{r Figure 3 DIFF, fig.width= 10, fig.height=15}
+##### DIFF
+
+idxnoresc = grepl("GO:BP", Rescue_DIFF_GO_results$source) & grepl("RAPA_noRESC", Rescue_DIFF_GO_results$query) 
+idxresc = grepl("GO:BP", Rescue_DIFF_GO_results$source) & grepl("RAPA_RESC", Rescue_DIFF_GO_results$query) 
+
+
+DIFF_GO_BP_RESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxresc, ], 10, Title="DIFF RAPA RESC", ylabel = "GO terms")+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+DIFF_GO_BP_noRESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxnoresc, ], 10, Title="DIFF RAPA noRESC", ylabel = "GO terms")+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+idxnoresc = grepl("TF", Rescue_DIFF_GO_results$source) & grepl("RAPA_noRESC", Rescue_DIFF_GO_results$query) 
+idxresc = grepl("TF", Rescue_DIFF_GO_results$source) & grepl("RAPA_RESC", Rescue_DIFF_GO_results$query) 
+
+if(!any(idxresc)){
+  DIFF_GO_TF_RESC_GOplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                                     label = "no significant TF") + 
+    ggtitle("DIFF RAPA RESC")+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+  } else {
+    DIFF_GO_TF_RESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxresc, ], 10, Title="DIFF RAPA RESC", ylabel = "Transcription Factors")+ 
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  }
+
+
+if(!any(idxnoresc)){
+  DIFF_GO_TF_noRESC_GOplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
+                                     label = "no significant TF") + 
+    ggtitle("DIFF RAPA noRESC")+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+  } else {
+    DIFF_GO_TF_noRESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxnoresc, ], 10, Title="DIFF RAPA noRESC", ylabel = "Transcription Factors")+ 
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  }
+
+DIFF_GO_BP_RESC_ORplot =  plotORs(geneids = rownames(metadata), 
+                  hits = Rescue_Genelist[["DIFF"]][["DIFFRAPA_RESC"]], 
+                  title = "DIFF RAPA RESC")
+DIFF_GO_BP_noRESC_ORplot =  plotORs(geneids = rownames(metadata), 
+                  hits = Rescue_Genelist[["DIFF"]][["DIFFRAPA_noRESC"]], 
+                  title = "DIFF RAPA noRESC")
+
+X = ggplot() + theme_void()
+
+finplot = ggpubr::ggarrange(
+  PROLIF_GO_BP_RESC_GOplot, X, DIFF_GO_BP_RESC_GOplot,
+  X,  X,  X, 
+  PROLIF_GO_BP_noRESC_GOplot,  X, DIFF_GO_BP_noRESC_GOplot,
+  X,  X,  X, 
+  PROLIF_GO_TF_RESC_GOplot,  X, DIFF_GO_TF_RESC_GOplot,
+  X,  X,  X, 
+  PROLIF_GO_TF_noRESC_GOplot,  X, DIFF_GO_TF_noRESC_GOplot, 
+  X,  X,  X, 
+  PROLIF_GO_BP_RESC_ORplot, X, DIFF_GO_BP_RESC_ORplot, 
+  X,  X,  X, 
+  PROLIF_GO_BP_noRESC_ORplot, X, DIFF_GO_BP_noRESC_ORplot,
+  
+  labels = c("A", "", "G",
+             "", "", "",  
+             "B", "", "H", 
+             "", "", "", 
+             "C", "", "I",
+             "", "", "",  
+             "D", "", "J",
+             "", "", "",  
+             "E", "", "K",
+             "", "", "",  
+             "F", "", "L"), 
+  ncol = 3, nrow = 11 ,widths = c(1,0.1,1), 
+  heights = c(0.7, 0.1, 0.9, 0.1, 0.2, 0.1, 0.7, 0.1,1.2,0.1,1.2))
+
+
+pdf(paste0(home,"./docs/Publication_figure3.pdf"), width = 12, height = 15)
+finplot
+dev.off()
+
+ggsave("./docs/Publication_figure3.svg", finplot, width = 10, height = 13)
+
+
+```
+
 
 
 

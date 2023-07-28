@@ -455,6 +455,7 @@ noDIFFRAPA_noRESC_ENTREZ = noDIFFhits_ENTREZ[! noDIFFhits_ENTREZ %in% noDIFFRAPA
 GOIs =list(noDIFFRAPA_RESC=noDIFFRAPA_RESC_ENTREZ,
            noDIFFRAPA_noRESC=noDIFFRAPA_noRESC_ENTREZ)
 
+Rescue_Genelist = list(PROLIF=GOIs)
 
 for (n in names(GOIs)){
   Resall=data.frame()
@@ -536,6 +537,8 @@ DIFFRAPA_noRESC_ENTREZ = DIFFhits_ENTREZ[! DIFFhits_ENTREZ %in% DIFFRAPA_RESC_EN
 GOIs =list(DIFFRAPA_RESC=DIFFRAPA_RESC_ENTREZ,
            DIFFRAPA_noRESC=DIFFRAPA_noRESC_ENTREZ)
 
+Rescue_Genelist[["DIFF"]] = GOIs
+
 
 for (n in names(GOIs)){
   Resall=data.frame()
@@ -592,6 +595,7 @@ plot(fit2,  quantities = TRUE, main="Overlap of gene hits")
 ```
 ```{r}
 save(ddsMat, file="./output/D62_dds_matrix.RData")
+save(Rescue_Genelist, file = "./output/RescueGenelists.RData")
 
 ```
 
