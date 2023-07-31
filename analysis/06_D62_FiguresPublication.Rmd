@@ -115,7 +115,7 @@ plotORs = function(geneids, hits, title){
     geom_pointrange(aes(color=starpval)) + geom_hline(yintercept = 0, lty=2) +
     scale_color_viridis_d(limits=c("", "*", "**", "adj.p**"), end = 0.8)+ 
     coord_flip(ylim=c( -2.5, 2.5)) + xlab("Genelist")+ylab(expression(log(OR) %+-% "95%CI"))+theme_bw()+
-  guides(color=guide_legend(title="P-value"))+ggtitle(title)
+    guides(color=guide_legend(title="P-value"))+ggtitle(title)
   
   
   return (p)
@@ -213,7 +213,7 @@ finplot = ggpubr::ggarrange(
   ncol = 3, nrow = 7 ,widths = c(1,0.1,1), heights = c(0.8, 0.1, 1, 0.1, 1, 0.1, 1.2))
 
 
-pdf(paste0(home,"./docs/Publication_figure1.pdf"), width = 12, height = 15)
+pdf(paste0("./docs/Publication_figure1.pdf"), width = 12, height = 15)
 finplot
 dev.off()
 
@@ -237,7 +237,7 @@ prolif_heatmap = geneheatmap(GOIsEntrez = prolif_dex_results$ENTREZ_ID[which(pro
                              annotation_row_names = rev(c("DEPDC5_KO_dr", "Epilepsy", "ASD")), 
                              # index of genelist to plot
                              title = "PROLIF DEX") %>% as.ggplot(hjust = .1)
-  
+
 idx = grepl("GO:BP", prolifGO_results$source)
 prolif_GOplot=GOplot(prolifGO_results[idx, ], 10, Title="PROLIF DEX", ylabel = "GO terms")+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
@@ -291,7 +291,7 @@ finplot = ggarrange(
   ncol = 3, nrow = 7, widths = c(1, 0.1, 1), heights = c(1.5, 0.1, 1, 0.1, 1, 0.1, 1.3))
 
 
-pdf(paste0(home,"./docs/Publication_figure2.pdf"), width = 12, height = 15)
+pdf(paste0("./docs/Publication_figure2.pdf"), width = 12, height = 15)
 finplot
 dev.off()
 
@@ -321,31 +321,31 @@ idxresc = grepl("TF", Rescue_PROLIF_GO_results$source) & grepl("RAPA_RESC", Resc
 
 if(!any(idxresc)){
   PROLIF_GO_TF_RESC_GOplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
-                                     label = "no significant TF") + 
+                                                label = "no significant TF") + 
     ggtitle("PROLIF RAPA RESC")+theme_void()+
     theme(plot.title = element_text(hjust = 0.5))
-  } else {
-    PROLIF_GO_TF_RESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxresc, ], 10, Title="PROLIF RAPA RESC", ylabel = "Transcription Factors")+ 
-      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-  }
+} else {
+  PROLIF_GO_TF_RESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxresc, ], 10, Title="PROLIF RAPA RESC", ylabel = "Transcription Factors")+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
 
 
 if(!any(idxnoresc)){
   PROLIF_GO_TF_noRESC_GOplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
-                                     label = "no significant TF") + 
+                                                  label = "no significant TF") + 
     ggtitle("PROLIF RAPA noRESC")+theme_void()+
     theme(plot.title = element_text(hjust = 0.5))
-  } else {
-    PROLIF_GO_TF_noRESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxnoresc, ], 10, Title="PROLIF RAPA noRESC", ylabel = "Transcription Factors")+ 
-      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-  }
+} else {
+  PROLIF_GO_TF_noRESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxnoresc, ], 10, Title="PROLIF RAPA noRESC", ylabel = "Transcription Factors")+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
 
 PROLIF_GO_BP_RESC_ORplot =  plotORs(geneids = rownames(metadata), 
-                  hits = Rescue_Genelist[["PROLIF"]][["noDIFFRAPA_RESC"]], 
-                  title = "PROLIF RAPA RESC")
+                                    hits = Rescue_Genelist[["PROLIF"]][["noDIFFRAPA_RESC"]], 
+                                    title = "PROLIF RAPA RESC")
 PROLIF_GO_BP_noRESC_ORplot =  plotORs(geneids = rownames(metadata), 
-                  hits = Rescue_Genelist[["PROLIF"]][["noDIFFRAPA_noRESC"]], 
-                  title = "PROLIF RAPA noRESC")
+                                      hits = Rescue_Genelist[["PROLIF"]][["noDIFFRAPA_noRESC"]], 
+                                      title = "PROLIF RAPA noRESC")
 ```
 
 ```{r Figure 3 DIFF, fig.width= 10, fig.height=15}
@@ -367,31 +367,31 @@ idxresc = grepl("TF", Rescue_DIFF_GO_results$source) & grepl("RAPA_RESC", Rescue
 
 if(!any(idxresc)){
   DIFF_GO_TF_RESC_GOplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
-                                     label = "no significant TF") + 
+                                              label = "no significant TF") + 
     ggtitle("DIFF RAPA RESC")+theme_void()+
     theme(plot.title = element_text(hjust = 0.5))
-  } else {
-    DIFF_GO_TF_RESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxresc, ], 10, Title="DIFF RAPA RESC", ylabel = "Transcription Factors")+ 
-      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-  }
+} else {
+  DIFF_GO_TF_RESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxresc, ], 10, Title="DIFF RAPA RESC", ylabel = "Transcription Factors")+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
 
 
 if(!any(idxnoresc)){
   DIFF_GO_TF_noRESC_GOplot= ggplot() + annotate("text", x = 4, y = 25, size=4, 
-                                     label = "no significant TF") + 
+                                                label = "no significant TF") + 
     ggtitle("DIFF RAPA noRESC")+theme_void()+
     theme(plot.title = element_text(hjust = 0.5))
-  } else {
-    DIFF_GO_TF_noRESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxnoresc, ], 10, Title="DIFF RAPA noRESC", ylabel = "Transcription Factors")+ 
-      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-  }
+} else {
+  DIFF_GO_TF_noRESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxnoresc, ], 10, Title="DIFF RAPA noRESC", ylabel = "Transcription Factors")+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
 
 DIFF_GO_BP_RESC_ORplot =  plotORs(geneids = rownames(metadata), 
-                  hits = Rescue_Genelist[["DIFF"]][["DIFFRAPA_RESC"]], 
-                  title = "DIFF RAPA RESC")
+                                  hits = Rescue_Genelist[["DIFF"]][["DIFFRAPA_RESC"]], 
+                                  title = "DIFF RAPA RESC")
 DIFF_GO_BP_noRESC_ORplot =  plotORs(geneids = rownames(metadata), 
-                  hits = Rescue_Genelist[["DIFF"]][["DIFFRAPA_noRESC"]], 
-                  title = "DIFF RAPA noRESC")
+                                    hits = Rescue_Genelist[["DIFF"]][["DIFFRAPA_noRESC"]], 
+                                    title = "DIFF RAPA noRESC")
 
 X = ggplot() + theme_void()
 
@@ -423,7 +423,7 @@ finplot = ggpubr::ggarrange(
   heights = c(0.7, 0.1, 0.9, 0.1, 0.2, 0.1, 0.7, 0.1,1.2,0.1,1.2))
 
 
-pdf(paste0(home,"./docs/Publication_figure3.pdf"), width = 12, height = 15)
+pdf(paste0("./docs/Publication_figure3.pdf"), width = 12, height = 15)
 finplot
 dev.off()
 
@@ -434,34 +434,102 @@ ggsave("./docs/Publication_figure3.svg", finplot, width = 10, height = 13)
 
 
 
+```{r Supplementary Figure 3, fig.width=10, fig.height=10}
+reads= counts(ddsMat)
 
-```{r Supplementary Figure 2}
+testset=reads[sample(1:nrow(reads), 1000),]
 
-any(rownames(logreads) != prolif_dex_results$ENTREZ_ID)
+sums=data.frame(log2_total_reads=log2(colSums(reads)), label=colnames(reads))
+sums$Sample = coldata[sums$label,"label"]
 
-prolif_dex_results$replicated=prolif_dex_results$sg2.1_noDIFF_noRAPA_adjP<=0.05 & 
-  prolif_dex_results$sg2.2_noDIFF_noRAPA_adjP<=0.05 & # both significant
-  prolif_dex_results$sg2.1_noDIFF_noRAPA_FC*prolif_dex_results$sg2.2_noDIFF_noRAPA_FC>0 # both in same direction 
-
-prolif_dex_results = prolif_dex_results[order(prolif_dex_results$replicated),]
-
-replplot_prolif = ggplot(prolif_dex_results, aes(x=-log10(sg2.1_noDIFF_noRAPA_adjP), y=-log10(sg2.2_noDIFF_noRAPA_adjP), color=replicated))+geom_point()+scale_color_brewer(palette="Dark2")+
-  theme_bw()+ ylab(expression("PROLIF KO Dep"[2.1]~-log[10](adj.P)))+ xlab(expression("PROLIF KO Dep"[2.2]~-log[10](adj.P)))
+SumReadplot = ggplot(data=sums,aes(x=label, y=log2_total_reads, fill=Sample))+
+  geom_bar(stat = "identity")+theme_classic()+
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  scale_fill_brewer(type = "qual", palette ="Set3")
 
 
-diff_dex_results$replicated=diff_dex_results$sg2.1_DIFF_noRAPA_adjP<=0.05 & 
-  diff_dex_results$sg2.2_DIFF_noRAPA_adjP<=0.05 & # both significant
-  diff_dex_results$sg2.1_DIFF_noRAPA_FC*diff_dex_results$sg2.2_DIFF_noRAPA_FC>0 # both in same direction 
+longdata = reshape2::melt(reads)
+colnames(longdata) = c("ENTREZ_ID", "Sample", "Counts")
+longdata$label = coldata[longdata$Sample, "label"]
 
-diff_dex_results = diff_dex_results[order(diff_dex_results$replicated),]
-diff_dex_results = diff_dex_results[complete.cases(diff_dex_results),]
+Readsdistplot = ggplot(data=longdata, aes(y=log2(Counts+1), x=Sample, fill=label))+
+  geom_boxplot(notch = T)+theme_classic()+
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  scale_fill_brewer(type = "qual", palette ="Set3")
 
-replplot_diff = ggplot(diff_dex_results, aes(x=-log10(sg2.1_DIFF_noRAPA_adjP), y=-log10(sg2.2_DIFF_noRAPA_adjP), color=replicated))+
-  geom_point()+scale_color_brewer(palette="Dark2")+
-  theme_bw()+ ylab(expression("DIFF KO Dep"[2.1]~-log[10](adj.P)))+ xlab(expression("DIFF KO Dep"[2.2]~-log[10](adj.P)))
 
+reads= counts(ddsMat, normalized=T)
+vars=apply(log2(reads+1), 1, var, na.rm=T)
+topvars = log2(reads[which(vars %in% sort(vars, decreasing=T)[1:2000]),]+1)
+
+distance = dist(t(topvars))
+
+sampleDistMatrix <- as.matrix(distance)
+
+#colors for plotting heatmap
+colors <- viridis::viridis(255)
+
+SampleInfo=coldata
+cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
+names(cellcol) = levels(SampleInfo$CellLine)
+
+gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
+names(gRNAcol) = levels(SampleInfo$gRNA)
+
+diffcol = brewer.pal(3,"Set1")[1:nlevels(SampleInfo$DIFF)]
+names(diffcol) = levels(SampleInfo$DIFF)
+
+rapacol = brewer.pal(3,"Set2")[1:nlevels(SampleInfo$RAPA)]
+names(rapacol) = levels(SampleInfo$RAPA)
+
+ann_colors = list(
+  DIFF = diffcol, 
+  RAPA = rapacol,
+  gRNA = gRNAcol
+  #,CellLine=cellcol
+)
+
+labels = SampleInfo[,c("gRNA","DIFF", "RAPA")] %>%  
+  mutate_all(as.character) %>% as.data.frame()
+
+rownames(labels)=SampleInfo$label_rep
+colnames(sampleDistMatrix) = SampleInfo[rownames(sampleDistMatrix), "label_rep"]
+rownames(sampleDistMatrix)=colnames(sampleDistMatrix)
+
+heatmapplot = pheatmap(sampleDistMatrix,
+                       clustering_distance_rows = distance,
+                       clustering_distance_cols = distance,
+                       clustering_method = "ward.D2",
+                       scale ="row",
+                       border_color = NA, 
+                       annotation_row = labels,
+                       annotation_col = labels,
+                       annotation_colors = ann_colors,
+                       col = colors, show_colnames = F, show_rownames = F,
+                       main = "Distances normalized log2 counts")
+
+
+
+finplot = ggarrange(ggarrange(SumReadplot, Readsdistplot,
+                              labels=c("A", "B")), 
+                    as.grob(heatmapplot), ncol = 1, labels = c("", "C"), 
+                    heights = c(1,2))
+
+
+pdf(paste0("./docs/Publication_Supplfigure3.pdf"), width = 12, height = 15)
+finplot
+dev.off()
+
+ggsave("./docs/Publication_Supplfigure3.svg", finplot, width = 10, height = 13)
 
 
 ```
+
+
+
 
 

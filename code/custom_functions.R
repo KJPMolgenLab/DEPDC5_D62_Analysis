@@ -130,6 +130,8 @@ GOplot = function(GOtable, N, Title="GO plot", ylabel="GO term"){
 geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL,
                      hm.cluster_rows = F,
                      hm.cluster_cols = F,
+                     show_rownames = F,
+                     show_colnames = F,
                      hm.scale="none",
                      annotation_row_labels = NA,
                      annotation_row_names = NA,
@@ -186,7 +188,7 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL,
                       c("RAPA", "gRNA", "DIFF",  "CellLine")]
   }
   rownames(labels)=colnames(dataset)
-  labels = labels[order(as.numeric(labels$RAPA), as.numeric(labels$gRNA)),]
+  labels = labels[order(as.numeric(labels$RAPA), as.numeric(labels$gRNA), as.numeric(labels$DIFF)),]
 
   labels = labels %>% mutate_all(as.character) %>% as.data.frame()
 
@@ -210,8 +212,8 @@ geneheatmap=function(GOIsEntrez,exprobj,CellID=NULL,
 
 
   pheatmap(dataset[,rownames(labels)],
-           show_rownames = F,
-           show_colnames = F,
+           show_rownames = show_rownames,
+           show_colnames = show_colnames,
            border_color = NA,
            cluster_rows = hm.cluster_rows,
            cluster_cols = hm.cluster_cols,

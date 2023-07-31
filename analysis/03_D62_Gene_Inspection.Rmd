@@ -10,10 +10,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 
-home = getwd()
-output= paste0(home, "/output/")
 
-source(paste0(home,"/code/custom_functions.R"))
 
 library(DESeq2)
 library(knitr)
@@ -32,7 +29,10 @@ opts_chunk$set(echo = TRUE,
 ```
 
 ```{r load_data}
+home = getwd()
+output= paste0(home, "/output/")
 
+source(paste0(home,"/code/custom_functions.R"))
 load(paste0(output,"/D62_dds_matrix.RData"))
 
 ```
@@ -150,7 +150,7 @@ geneheatmap(GOIsEntrez,ddsMat)
 
 ## Set of 15 Cellular Markers
 
-```{r plotGOIs 15 markers, fig.width=8}
+```{r plotGOIs 15 markers, fig.width=9, fig.height=5}
 
 GOIsEntrez=c(
   DEPDC5="9681",
@@ -178,7 +178,15 @@ GOIsEntrez=c(
   TH="7054",
   DRD2="1813")
 
-geneheatmap(GOIsEntrez,ddsMat)
+GOIplot = geneheatmap(GOIsEntrez,ddsMat, show_rownames = T)
+
+pdf("./docs/Publication_Supplfigure4A.pdf", width = 9, height = 5)
+GOIplot
+dev.off()
+
+ggsave("./docs/Publication_Supplfigure4A.svg", GOIplot, width =9, height = 5)
+
+
 ```
 
 

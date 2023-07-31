@@ -8,13 +8,10 @@ output: html_document
 
 ```{r setup, include=FALSE, echo=FALSE}
 
-home = getwd()
+
 
 secret="C:/Users/andreas_chiocchetti/OneDrive/personal/fuchs_credentials.R"
 
-
-output= paste0(home, "/output/")
-source(paste0(home,"/code/custom_functions.R")) #also defines colors
 
 library(knitr)
 library(RCurl) 
@@ -48,7 +45,9 @@ set.seed(157434538)
 
 
 ```{r getdata}
-
+home = getwd()
+output= paste0(home, "/output/")
+source(paste0(home,"/code/custom_functions.R")) #also defines colors
 
 filetarget= paste0(home,"/data/Countmatrix.RData")
 load(filetarget)
@@ -224,7 +223,7 @@ cpm.sel.trans = t(log2_cpm[order(varsset,decreasing = T)[1:2000],])
 rownames(cpm.sel.trans)=SampleInfo$label_rep
 
 distance = dist(cpm.sel.trans)
-hc = hclust(distance, method="ward.D2")
+hc = stats::hclust(distance, method="ward.D2")
 cutN=12 #number of different conditions (DIFF, RAPA, sgRNA)
 clusters = cutree(hc, k=cutN)
 Colors=sample(jetcolors(cutN))[clusters]
