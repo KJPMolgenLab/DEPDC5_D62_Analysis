@@ -368,7 +368,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -379,8 +379,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -389,13 +389,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-10-12
+<strong>Last updated:</strong> 2023-07-31
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>DEPDC5_D62_Analysis/</code> <span
@@ -418,21 +418,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -523,15 +520,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPDC5D62Analysistreed08d4ab12912073615988f563e2d24512a461884targetblankd08d4aba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPDC5D62Analysistreefbbab8e5ed3acfdc9f550f0e1082e02589db90batargetblankfbbab8ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/tree/d08d4ab12912073615988f563e2d24512a461884" target="_blank">d08d4ab</a>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/tree/fbbab8e5ed3acfdc9f550f0e1082e02589db90ba" target="_blank">fbbab8e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPDC5D62Analysistreed08d4ab12912073615988f563e2d24512a461884targetblankd08d4aba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPDC5D62Analysistreefbbab8e5ed3acfdc9f550f0e1082e02589db90batargetblankfbbab8ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -541,7 +538,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/tree/d08d4ab12912073615988f563e2d24512a461884" target="_blank">d08d4ab</a>.
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/tree/fbbab8e5ed3acfdc9f550f0e1082e02589db90ba" target="_blank">fbbab8e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -559,18 +556,13 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  analysis/06_D62_FiguresPublication.Rmd
-    Untracked:  output/figure2.pdf
+    Ignored:    analysis/.Rhistory
+    Ignored:    output/D62_mdsplots.RData
+    Ignored:    output/RescueGenelists.RData
+    Ignored:    output/figure2.pdf
 
 Unstaged changes:
-    Modified:   analysis/02_D62_Preprocessing_counts.Rmd
-    Modified:   analysis/04_D62_WGCNA.Rmd
-    Modified:   analysis/05_D62_Statistical_analysis.Rmd
-    Modified:   code/custom_functions.R
     Modified:   output/D62_GOresWGCNA.xlsx
-    Modified:   output/D62_ResTabs_WGCNA.RData
     Modified:   output/D62_dds_matrix.RData
     Modified:   output/Diff_refnoRAPA_allgenes.xlsx
     Modified:   output/GOres_D62DIFFRAPA.xlsx
@@ -585,9 +577,7 @@ Unstaged changes:
     Modified:   output/Restab_D62_NTCnoRAPA_noDIFF_noRAPA.xlsx
     Modified:   output/Restab_D62_NTCwRAPA_DIFF_RAPA.xlsx
     Modified:   output/Restab_D62_NTCwRAPA_noDIFF_RAPA.xlsx
-    Modified:   output/figure1.pdf
     Modified:   output/noDiff_refnoRAPA_allgenes.xlsx
-    Deleted:    output/~$Diff_refnoRAPA_allgenes.xlsx
 
 </code></pre>
 <p>
@@ -602,10 +592,109 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/06_D62_FiguresPublication.Rmd</code>) and HTML
+(<code>docs/06_D62_FiguresPublication.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/fbbab8e5ed3acfdc9f550f0e1082e02589db90ba/analysis/06_D62_FiguresPublication.Rmd" target="_blank">fbbab8e</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2023-07-31
+</td>
+<td>
+wflow_publish(c("./analysis/<em>", "code/</em>"), all = T)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/78ac7a6e560a1d1706b5a7526e81b669dc4e2b85/analysis/06_D62_FiguresPublication.Rmd" target="_blank">78ac7a6</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2023-07-28
+</td>
+<td>
+updated publication figures
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KJPMolgenLab/DEPDC5_D62_Analysis/1adc81a88190a1eb36fd79ad71c00dbc21b8070f/docs/06_D62_FiguresPublication.html" target="_blank">1adc81a</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2023-07-25
+</td>
+<td>
+add figures for publication
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/6cbb9a06158b31eff2dd5f5108ae94e873b9bd0f/analysis/06_D62_FiguresPublication.Rmd" target="_blank">6cbb9a0</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2023-07-25
+</td>
+<td>
+plots fro publication added
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -622,7 +711,7 @@ source(paste0(home,&quot;/code/custom_functions.R&quot;))</code></pre>
 ✔ tibble  3.1.8      ✔ dplyr   1.0.10
 ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
 ✔ readr   2.1.2      ✔ forcats 0.5.2 
-✔ purrr   0.3.4      
+✔ purrr   0.3.5      
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::collapse()        masks IRanges::collapse()
 ✖ dplyr::combine()         masks Biobase::combine(), BiocGenerics::combine()
@@ -663,7 +752,10 @@ diff_dex_results = read.xlsx(&quot;./output/Diff_refnoRAPA_allgenes.xlsx&quot;)
 diffGO_results= read.xlsx(&quot;./output/GOres_D62DIFFnoRAPA.xlsx&quot;)
 
 
+Rescue_PROLIF_GO_results= read.xlsx(&quot;./output/GOres_Rescue_noDIFF.xlsx&quot;)
+Rescue_DIFF_GO_results= read.xlsx(&quot;./output/GOres_Rescue_DIFF.xlsx&quot;)
 
+load(file = &quot;./output/RescueGenelists.RData&quot;)
 
 names(genelists) = gsub(&quot;.txt&quot;, &quot;&quot;, list.files(paste0(home,&quot;/data/genelists_to_test&quot;)))</code></pre>
 <pre class="r"><code>recolor = function(p){ 
@@ -711,11 +803,20 @@ plotORs = function(geneids, hits, title){
   starpval[is.na(Resall$Beta)]=&quot;n.a.&quot;
   Resall$starpval = starpval
   
-  p= ggplot(Resall, aes(x=label, y=Beta, ymin=Beta-SE, ymax=Beta+SE))+
+  cis = data.frame(Resall$Beta-1.96*Resall$SE, Resall$Beta+1.96*Resall$SE)
+  cis[is.na(cis[1]), 1]=-Inf
+  cis[is.na(cis[2]), 2]=Inf
+  
+  Resall$CIlinmin = apply(cis, 1, min)
+  Resall$CIlinmax = apply(cis, 1, max)
+  
+  
+  p= ggplot(Resall, aes(x=label, y=Beta, ymin=CIlinmin, ymax=CIlinmax))+
     geom_pointrange(aes(color=starpval)) + geom_hline(yintercept = 0, lty=2) +
-    scale_color_viridis_d(limits=c(&quot;&quot;, &quot;*&quot;, &quot;**&quot;, &quot;adj.p**&quot;), end = 0.8)+
-    coord_flip() + xlab(&quot;Genelist&quot;)+ylab(expression(log(OR)+-&quot;95%CI&quot;))+theme_bw()+
-    ylim(-2.5, 2.5)+guides(color=guide_legend(title=&quot;P-value&quot;))
+    scale_color_viridis_d(limits=c(&quot;&quot;, &quot;*&quot;, &quot;**&quot;, &quot;adj.p**&quot;), end = 0.8)+ 
+    coord_flip(ylim=c( -2.5, 2.5)) + xlab(&quot;Genelist&quot;)+ylab(expression(log(OR) %+-% &quot;95%CI&quot;))+theme_bw()+
+    guides(color=guide_legend(title=&quot;P-value&quot;))+ggtitle(title)
+  
   
   return (p)
   
@@ -790,8 +891,9 @@ black_OR = plotORs(geneids = rownames(metadata), hits = rownames(metadata)[metad
 
 X = ggplot() + theme_void()
 
-pdf(paste0(home,&quot;/output/figure1.pdf&quot;), width = 12, height = 15)
-ggpubr::ggarrange(
+
+
+finplot = ggpubr::ggarrange(
   brown_ME, X, black_ME,
   X,  X,  X, 
   brown_GO,  X, black_GO,
@@ -801,9 +903,14 @@ ggpubr::ggarrange(
   brown_OR,  X, black_OR, 
   labels = c(&quot;A&quot;, &quot;&quot;, &quot;E&quot;,&quot;&quot;, &quot;&quot;, &quot;&quot;,  &quot;B&quot;, &quot;&quot;, &quot;F&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;C&quot;, &quot;&quot;, &quot;G&quot;,&quot;&quot;, &quot;&quot;, &quot;&quot;,  &quot;D&quot;, &quot;&quot;, &quot;H&quot;), 
   ncol = 3, nrow = 7 ,widths = c(1,0.1,1), heights = c(0.8, 0.1, 1, 0.1, 1, 0.1, 1.2))
+
+
+pdf(paste0(&quot;./docs/Publication_figure1.pdf&quot;), width = 12, height = 15)
+finplot
 dev.off()</code></pre>
 <pre><code>quartz_off_screen 
                 2 </code></pre>
+<pre class="r"><code>ggsave(&quot;./docs/Publication_figure1.svg&quot;, finplot, width = 10, height = 13)</code></pre>
 <pre class="r"><code># create plots 
 
 prolif_heatmap = geneheatmap(GOIsEntrez = prolif_dex_results$ENTREZ_ID[which(prolif_dex_results$REPLICATED)],
@@ -814,7 +921,7 @@ prolif_heatmap = geneheatmap(GOIsEntrez = prolif_dex_results$ENTREZ_ID[which(pro
                              annotation_row_names = rev(c(&quot;DEPDC5_KO_dr&quot;, &quot;Epilepsy&quot;, &quot;ASD&quot;)), 
                              # index of genelist to plot
                              title = &quot;PROLIF DEX&quot;) %&gt;% as.ggplot(hjust = .1)</code></pre>
-<p><img src="figure/06_D62_FiguresPublication.Rmd/Figure%202%20and%203-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/06_D62_FiguresPublication.Rmd/Figure%202-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>idx = grepl(&quot;GO:BP&quot;, prolifGO_results$source)
 prolif_GOplot=GOplot(prolifGO_results[idx, ], 10, Title=&quot;PROLIF DEX&quot;, ylabel = &quot;GO terms&quot;)+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
@@ -841,7 +948,7 @@ diff_heatmap = geneheatmap(GOIsEntrez = diff_dex_results$ENTREZ_ID[which(diff_de
                            annotation_row_labels = rev(c(15,20,24)), 
                            annotation_row_names = rev(c(&quot;DEPDC5_KO_dr&quot;, &quot;Epilepsy&quot;, &quot;ASD&quot;)),
                            title = &quot;DIFF DEX&quot;) %&gt;% as.ggplot(hjust = .1)</code></pre>
-<p><img src="figure/06_D62_FiguresPublication.Rmd/Figure%202%20and%203-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/06_D62_FiguresPublication.Rmd/Figure%202-2.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>idx = grepl(&quot;GO:BP&quot;, diffGO_results$source)
 diff_GOplot=GOplot(diffGO_results[idx, ], 10, Title=&quot;DIFF DEX&quot;, ylabel = &quot;GO terms&quot;)+ 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
@@ -856,8 +963,7 @@ diff_OR = plotORs(geneids = rownames(metadata),
                   title = &quot;DIFF DEX&quot;)
 
 
-pdf(&quot;./output/figure2.pdf&quot;, width = 12, height = 15)
-ggarrange(
+finplot = ggarrange(
   prolif_heatmap,X, diff_heatmap, 
   X,  X,  X, 
   prolif_GOplot,X, diff_GOplot, 
@@ -867,31 +973,227 @@ ggarrange(
   prolif_OR, X, diff_OR,
   labels = c(&quot;A&quot;, &quot;&quot;, &quot;E&quot;,&quot;&quot;, &quot;&quot;, &quot;&quot;,  &quot;B&quot;, &quot;&quot;, &quot;F&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;C&quot;, &quot;&quot;, &quot;G&quot;,&quot;&quot;, &quot;&quot;, &quot;&quot;,  &quot;D&quot;, &quot;&quot;, &quot;H&quot;), 
   ncol = 3, nrow = 7, widths = c(1, 0.1, 1), heights = c(1.5, 0.1, 1, 0.1, 1, 0.1, 1.3))
+
+
+pdf(paste0(&quot;./docs/Publication_figure2.pdf&quot;), width = 12, height = 15)
+finplot
 dev.off()</code></pre>
 <pre><code>quartz_off_screen 
                 2 </code></pre>
-<pre class="r"><code>any(rownames(logreads) != prolif_dex_results$ENTREZ_ID)</code></pre>
-<pre><code>[1] FALSE</code></pre>
-<pre class="r"><code>prolif_dex_results$replicated=prolif_dex_results$sg2.1_noDIFF_noRAPA_adjP&lt;=0.05 &amp; 
-  prolif_dex_results$sg2.2_noDIFF_noRAPA_adjP&lt;=0.05 &amp; # both significant
-  prolif_dex_results$sg2.1_noDIFF_noRAPA_FC*prolif_dex_results$sg2.2_noDIFF_noRAPA_FC&gt;0 # both in same direction 
-
-prolif_dex_results = prolif_dex_results[order(prolif_dex_results$replicated),]
-
-replplot_prolif = ggplot(prolif_dex_results, aes(x=-log10(sg2.1_noDIFF_noRAPA_adjP), y=-log10(sg2.2_noDIFF_noRAPA_adjP), color=replicated))+geom_point()+scale_color_brewer(palette=&quot;Dark2&quot;)+
-  theme_bw()+ ylab(expression(&quot;PROLIF KO Dep&quot;[2.1]~-log[10](adj.P)))+ xlab(expression(&quot;PROLIF KO Dep&quot;[2.2]~-log[10](adj.P)))
+<pre class="r"><code>ggsave(&quot;./docs/Publication_figure2.svg&quot;, finplot, width = 10, height = 13)</code></pre>
+<pre class="r"><code>idxnoresc = grepl(&quot;GO:BP&quot;, Rescue_PROLIF_GO_results$source) &amp; grepl(&quot;RAPA_noRESC&quot;, Rescue_PROLIF_GO_results$query) 
+idxresc = grepl(&quot;GO:BP&quot;, Rescue_PROLIF_GO_results$source) &amp; grepl(&quot;RAPA_RESC&quot;, Rescue_PROLIF_GO_results$query) 
 
 
-diff_dex_results$replicated=diff_dex_results$sg2.1_DIFF_noRAPA_adjP&lt;=0.05 &amp; 
-  diff_dex_results$sg2.2_DIFF_noRAPA_adjP&lt;=0.05 &amp; # both significant
-  diff_dex_results$sg2.1_DIFF_noRAPA_FC*diff_dex_results$sg2.2_DIFF_noRAPA_FC&gt;0 # both in same direction 
+PROLIF_GO_BP_RESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxresc, ], 10, Title=&quot;PROLIF RAPA RESC&quot;, ylabel = &quot;GO terms&quot;)+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-diff_dex_results = diff_dex_results[order(diff_dex_results$replicated),]
-diff_dex_results = diff_dex_results[complete.cases(diff_dex_results),]
 
-replplot_diff = ggplot(diff_dex_results, aes(x=-log10(sg2.1_DIFF_noRAPA_adjP), y=-log10(sg2.2_DIFF_noRAPA_adjP), color=replicated))+
-  geom_point()+scale_color_brewer(palette=&quot;Dark2&quot;)+
-  theme_bw()+ ylab(expression(&quot;DIFF KO Dep&quot;[2.1]~-log[10](adj.P)))+ xlab(expression(&quot;DIFF KO Dep&quot;[2.2]~-log[10](adj.P)))</code></pre>
+
+PROLIF_GO_BP_noRESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxnoresc, ], 10, Title=&quot;PROLIF RAPA noRESC&quot;, ylabel = &quot;GO terms&quot;)+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+
+idxnoresc = grepl(&quot;TF&quot;, Rescue_PROLIF_GO_results$source) &amp; grepl(&quot;RAPA_noRESC&quot;, Rescue_PROLIF_GO_results$query) 
+idxresc = grepl(&quot;TF&quot;, Rescue_PROLIF_GO_results$source) &amp; grepl(&quot;RAPA_RESC&quot;, Rescue_PROLIF_GO_results$query) 
+
+if(!any(idxresc)){
+  PROLIF_GO_TF_RESC_GOplot= ggplot() + annotate(&quot;text&quot;, x = 4, y = 25, size=4, 
+                                                label = &quot;no significant TF&quot;) + 
+    ggtitle(&quot;PROLIF RAPA RESC&quot;)+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+} else {
+  PROLIF_GO_TF_RESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxresc, ], 10, Title=&quot;PROLIF RAPA RESC&quot;, ylabel = &quot;Transcription Factors&quot;)+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+
+if(!any(idxnoresc)){
+  PROLIF_GO_TF_noRESC_GOplot= ggplot() + annotate(&quot;text&quot;, x = 4, y = 25, size=4, 
+                                                  label = &quot;no significant TF&quot;) + 
+    ggtitle(&quot;PROLIF RAPA noRESC&quot;)+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+} else {
+  PROLIF_GO_TF_noRESC_GOplot=GOplot(Rescue_PROLIF_GO_results[idxnoresc, ], 10, Title=&quot;PROLIF RAPA noRESC&quot;, ylabel = &quot;Transcription Factors&quot;)+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+PROLIF_GO_BP_RESC_ORplot =  plotORs(geneids = rownames(metadata), 
+                                    hits = Rescue_Genelist[[&quot;PROLIF&quot;]][[&quot;noDIFFRAPA_RESC&quot;]], 
+                                    title = &quot;PROLIF RAPA RESC&quot;)
+PROLIF_GO_BP_noRESC_ORplot =  plotORs(geneids = rownames(metadata), 
+                                      hits = Rescue_Genelist[[&quot;PROLIF&quot;]][[&quot;noDIFFRAPA_noRESC&quot;]], 
+                                      title = &quot;PROLIF RAPA noRESC&quot;)</code></pre>
+<pre class="r"><code>##### DIFF
+
+idxnoresc = grepl(&quot;GO:BP&quot;, Rescue_DIFF_GO_results$source) &amp; grepl(&quot;RAPA_noRESC&quot;, Rescue_DIFF_GO_results$query) 
+idxresc = grepl(&quot;GO:BP&quot;, Rescue_DIFF_GO_results$source) &amp; grepl(&quot;RAPA_RESC&quot;, Rescue_DIFF_GO_results$query) 
+
+
+DIFF_GO_BP_RESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxresc, ], 10, Title=&quot;DIFF RAPA RESC&quot;, ylabel = &quot;GO terms&quot;)+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+DIFF_GO_BP_noRESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxnoresc, ], 10, Title=&quot;DIFF RAPA noRESC&quot;, ylabel = &quot;GO terms&quot;)+ 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+idxnoresc = grepl(&quot;TF&quot;, Rescue_DIFF_GO_results$source) &amp; grepl(&quot;RAPA_noRESC&quot;, Rescue_DIFF_GO_results$query) 
+idxresc = grepl(&quot;TF&quot;, Rescue_DIFF_GO_results$source) &amp; grepl(&quot;RAPA_RESC&quot;, Rescue_DIFF_GO_results$query) 
+
+if(!any(idxresc)){
+  DIFF_GO_TF_RESC_GOplot= ggplot() + annotate(&quot;text&quot;, x = 4, y = 25, size=4, 
+                                              label = &quot;no significant TF&quot;) + 
+    ggtitle(&quot;DIFF RAPA RESC&quot;)+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+} else {
+  DIFF_GO_TF_RESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxresc, ], 10, Title=&quot;DIFF RAPA RESC&quot;, ylabel = &quot;Transcription Factors&quot;)+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+
+if(!any(idxnoresc)){
+  DIFF_GO_TF_noRESC_GOplot= ggplot() + annotate(&quot;text&quot;, x = 4, y = 25, size=4, 
+                                                label = &quot;no significant TF&quot;) + 
+    ggtitle(&quot;DIFF RAPA noRESC&quot;)+theme_void()+
+    theme(plot.title = element_text(hjust = 0.5))
+} else {
+  DIFF_GO_TF_noRESC_GOplot=GOplot(Rescue_DIFF_GO_results[idxnoresc, ], 10, Title=&quot;DIFF RAPA noRESC&quot;, ylabel = &quot;Transcription Factors&quot;)+ 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+}
+
+DIFF_GO_BP_RESC_ORplot =  plotORs(geneids = rownames(metadata), 
+                                  hits = Rescue_Genelist[[&quot;DIFF&quot;]][[&quot;DIFFRAPA_RESC&quot;]], 
+                                  title = &quot;DIFF RAPA RESC&quot;)
+DIFF_GO_BP_noRESC_ORplot =  plotORs(geneids = rownames(metadata), 
+                                    hits = Rescue_Genelist[[&quot;DIFF&quot;]][[&quot;DIFFRAPA_noRESC&quot;]], 
+                                    title = &quot;DIFF RAPA noRESC&quot;)
+
+X = ggplot() + theme_void()
+
+finplot = ggpubr::ggarrange(
+  PROLIF_GO_BP_RESC_GOplot, X, DIFF_GO_BP_RESC_GOplot,
+  X,  X,  X, 
+  PROLIF_GO_BP_noRESC_GOplot,  X, DIFF_GO_BP_noRESC_GOplot,
+  X,  X,  X, 
+  PROLIF_GO_TF_RESC_GOplot,  X, DIFF_GO_TF_RESC_GOplot,
+  X,  X,  X, 
+  PROLIF_GO_TF_noRESC_GOplot,  X, DIFF_GO_TF_noRESC_GOplot, 
+  X,  X,  X, 
+  PROLIF_GO_BP_RESC_ORplot, X, DIFF_GO_BP_RESC_ORplot, 
+  X,  X,  X, 
+  PROLIF_GO_BP_noRESC_ORplot, X, DIFF_GO_BP_noRESC_ORplot,
+  
+  labels = c(&quot;A&quot;, &quot;&quot;, &quot;G&quot;,
+             &quot;&quot;, &quot;&quot;, &quot;&quot;,  
+             &quot;B&quot;, &quot;&quot;, &quot;H&quot;, 
+             &quot;&quot;, &quot;&quot;, &quot;&quot;, 
+             &quot;C&quot;, &quot;&quot;, &quot;I&quot;,
+             &quot;&quot;, &quot;&quot;, &quot;&quot;,  
+             &quot;D&quot;, &quot;&quot;, &quot;J&quot;,
+             &quot;&quot;, &quot;&quot;, &quot;&quot;,  
+             &quot;E&quot;, &quot;&quot;, &quot;K&quot;,
+             &quot;&quot;, &quot;&quot;, &quot;&quot;,  
+             &quot;F&quot;, &quot;&quot;, &quot;L&quot;), 
+  ncol = 3, nrow = 11 ,widths = c(1,0.1,1), 
+  heights = c(0.7, 0.1, 0.9, 0.1, 0.2, 0.1, 0.7, 0.1,1.2,0.1,1.2))
+
+
+pdf(paste0(&quot;./docs/Publication_figure3.pdf&quot;), width = 12, height = 15)
+finplot
+dev.off()</code></pre>
+<pre><code>quartz_off_screen 
+                2 </code></pre>
+<pre class="r"><code>ggsave(&quot;./docs/Publication_figure3.svg&quot;, finplot, width = 10, height = 13)</code></pre>
+<pre class="r"><code>reads= counts(ddsMat)
+
+testset=reads[sample(1:nrow(reads), 1000),]
+
+sums=data.frame(log2_total_reads=log2(colSums(reads)), label=colnames(reads))
+sums$Sample = coldata[sums$label,&quot;label&quot;]
+
+SumReadplot = ggplot(data=sums,aes(x=label, y=log2_total_reads, fill=Sample))+
+  geom_bar(stat = &quot;identity&quot;)+theme_classic()+
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  scale_fill_brewer(type = &quot;qual&quot;, palette =&quot;Set3&quot;)
+
+
+longdata = reshape2::melt(reads)
+colnames(longdata) = c(&quot;ENTREZ_ID&quot;, &quot;Sample&quot;, &quot;Counts&quot;)
+longdata$label = coldata[longdata$Sample, &quot;label&quot;]
+
+Readsdistplot = ggplot(data=longdata, aes(y=log2(Counts+1), x=Sample, fill=label))+
+  geom_boxplot(notch = T)+theme_classic()+
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  scale_fill_brewer(type = &quot;qual&quot;, palette =&quot;Set3&quot;)
+
+
+reads= counts(ddsMat, normalized=T)
+vars=apply(log2(reads+1), 1, var, na.rm=T)
+topvars = log2(reads[which(vars %in% sort(vars, decreasing=T)[1:2000]),]+1)
+
+distance = dist(t(topvars))
+
+sampleDistMatrix &lt;- as.matrix(distance)
+
+#colors for plotting heatmap
+colors &lt;- viridis::viridis(255)
+
+SampleInfo=coldata
+cellcol = Dark8[1:nlevels(SampleInfo$CellLine)]
+names(cellcol) = levels(SampleInfo$CellLine)
+
+gRNAcol = Dark8[c(1:nlevels(SampleInfo$gRNA))+nlevels(SampleInfo$CellLine)]
+names(gRNAcol) = levels(SampleInfo$gRNA)
+
+diffcol = brewer.pal(3,&quot;Set1&quot;)[1:nlevels(SampleInfo$DIFF)]
+names(diffcol) = levels(SampleInfo$DIFF)
+
+rapacol = brewer.pal(3,&quot;Set2&quot;)[1:nlevels(SampleInfo$RAPA)]
+names(rapacol) = levels(SampleInfo$RAPA)
+
+ann_colors = list(
+  DIFF = diffcol, 
+  RAPA = rapacol,
+  gRNA = gRNAcol
+  #,CellLine=cellcol
+)
+
+labels = SampleInfo[,c(&quot;gRNA&quot;,&quot;DIFF&quot;, &quot;RAPA&quot;)] %&gt;%  
+  mutate_all(as.character) %&gt;% as.data.frame()
+
+rownames(labels)=SampleInfo$label_rep
+colnames(sampleDistMatrix) = SampleInfo[rownames(sampleDistMatrix), &quot;label_rep&quot;]
+rownames(sampleDistMatrix)=colnames(sampleDistMatrix)
+
+heatmapplot = pheatmap(sampleDistMatrix,
+                       clustering_distance_rows = distance,
+                       clustering_distance_cols = distance,
+                       clustering_method = &quot;ward.D2&quot;,
+                       scale =&quot;row&quot;,
+                       border_color = NA, 
+                       annotation_row = labels,
+                       annotation_col = labels,
+                       annotation_colors = ann_colors,
+                       col = colors, show_colnames = F, show_rownames = F,
+                       main = &quot;Distances normalized log2 counts&quot;)</code></pre>
+<p><img src="figure/06_D62_FiguresPublication.Rmd/Supplementary%20Figure%203-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>finplot = ggarrange(ggarrange(SumReadplot, Readsdistplot,
+                              labels=c(&quot;A&quot;, &quot;B&quot;)), 
+                    as.grob(heatmapplot), ncol = 1, labels = c(&quot;&quot;, &quot;C&quot;), 
+                    heights = c(1,2))
+
+
+pdf(paste0(&quot;./docs/Publication_Supplfigure3.pdf&quot;), width = 12, height = 15)
+finplot
+dev.off()</code></pre>
+<pre><code>quartz_off_screen 
+                2 </code></pre>
+<pre class="r"><code>ggsave(&quot;./docs/Publication_Supplfigure3.svg&quot;, finplot, width = 10, height = 13)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -920,7 +1222,7 @@ other attached packages:
  [1] pheatmap_1.0.12             RColorBrewer_1.1-3         
  [3] compareGroups_4.5.1         forcats_0.5.2              
  [5] stringr_1.4.1               dplyr_1.0.10               
- [7] purrr_0.3.4                 readr_2.1.2                
+ [7] purrr_0.3.5                 readr_2.1.2                
  [9] tidyr_1.2.1                 tibble_3.1.8               
 [11] tidyverse_1.3.2             kableExtra_1.3.4           
 [13] openxlsx_4.2.5              DESeq2_1.36.0              
@@ -929,52 +1231,54 @@ other attached packages:
 [19] GenomicRanges_1.48.0        GenomeInfoDb_1.32.4        
 [21] IRanges_2.30.1              S4Vectors_0.34.0           
 [23] BiocGenerics_0.42.0         ggplotify_0.1.0            
-[25] ggpubr_0.4.0                ggplot2_3.3.6              
+[25] ggpubr_0.4.0                ggplot2_3.4.0              
 [27] workflowr_1.7.0            
 
 loaded via a namespace (and not attached):
   [1] uuid_1.1-0             readxl_1.4.1           backports_1.4.1       
-  [4] systemfonts_1.0.4      splines_4.2.0          BiocParallel_1.30.3   
-  [7] digest_0.6.29          yulab.utils_0.0.5      htmltools_0.5.3       
- [10] fansi_1.0.3            magrittr_2.0.3         Rsolnp_1.16           
- [13] memoise_2.0.1          googlesheets4_1.0.1    tzdb_0.3.0            
- [16] Biostrings_2.64.1      annotate_1.74.0        modelr_0.1.9          
- [19] officer_0.4.4          svglite_2.1.0          colorspace_2.0-3      
- [22] blob_1.2.3             rvest_1.0.3            haven_2.5.1           
- [25] xfun_0.33              callr_3.7.2            crayon_1.5.1          
- [28] RCurl_1.98-1.8         jsonlite_1.8.0         genefilter_1.78.0     
- [31] survival_3.4-0         glue_1.6.2             gtable_0.3.1          
- [34] gargle_1.2.1           zlibbioc_1.42.0        XVector_0.36.0        
- [37] webshot_0.5.3          DelayedArray_0.22.0    car_3.1-0             
- [40] abind_1.4-5            scales_1.2.1           DBI_1.1.3             
- [43] rstatix_0.7.0          Rcpp_1.0.9             viridisLite_0.4.1     
- [46] xtable_1.8-4           gridGraphics_0.5-1     bit_4.0.4             
- [49] truncnorm_1.0-8        httr_1.4.4             ellipsis_0.3.2        
- [52] mice_3.14.0            farver_2.1.1           pkgconfig_2.0.3       
- [55] XML_3.99-0.10          nnet_7.3-17            sass_0.4.2            
- [58] dbplyr_2.2.1           locfit_1.5-9.6         utf8_1.2.2            
- [61] labeling_0.4.2         tidyselect_1.1.2       rlang_1.0.5           
- [64] later_1.3.0            AnnotationDbi_1.58.0   munsell_0.5.0         
- [67] cellranger_1.1.0       tools_4.2.0            cachem_1.0.6          
- [70] cli_3.4.0              generics_0.1.3         RSQLite_2.2.17        
- [73] broom_1.0.1            evaluate_0.16          fastmap_1.1.0         
- [76] yaml_2.3.5             processx_3.7.0         knitr_1.40            
- [79] bit64_4.0.5            fs_1.5.2               zip_2.2.1             
- [82] KEGGREST_1.36.3        whisker_0.4            xml2_1.3.3            
- [85] compiler_4.2.0         rstudioapi_0.14        png_0.1-7             
- [88] ggsignif_0.6.3         reprex_2.0.2           geneplotter_1.74.0    
- [91] bslib_0.4.0            stringi_1.7.8          HardyWeinberg_1.7.5   
- [94] highr_0.9              ps_1.7.1               gdtools_0.2.4         
- [97] lattice_0.20-45        Matrix_1.5-1           vctrs_0.4.1           
-[100] pillar_1.8.1           lifecycle_1.0.2        jquerylib_0.1.4       
-[103] cowplot_1.1.1          data.table_1.14.2      flextable_0.8.1       
-[106] bitops_1.0-7           httpuv_1.6.6           R6_2.5.1              
-[109] promises_1.2.0.1       writexl_1.4.0          codetools_0.2-18      
-[112] assertthat_0.2.1       chron_2.3-57           rprojroot_2.0.3       
-[115] withr_2.5.0            GenomeInfoDbData_1.2.8 parallel_4.2.0        
-[118] hms_1.1.2              grid_4.2.0             rmarkdown_2.16        
-[121] carData_3.0-5          googledrive_2.0.0      git2r_0.30.1          
-[124] getPass_0.2-2          base64enc_0.1-3        lubridate_1.8.0       </code></pre>
+  [4] systemfonts_1.0.4      plyr_1.8.7             splines_4.2.0         
+  [7] BiocParallel_1.30.3    digest_0.6.30          yulab.utils_0.0.5     
+ [10] htmltools_0.5.3        viridis_0.6.2          fansi_1.0.3           
+ [13] magrittr_2.0.3         Rsolnp_1.16            memoise_2.0.1         
+ [16] googlesheets4_1.0.1    tzdb_0.3.0             Biostrings_2.64.1     
+ [19] annotate_1.74.0        modelr_0.1.9           officer_0.4.4         
+ [22] svglite_2.1.0          colorspace_2.0-3       blob_1.2.3            
+ [25] rvest_1.0.3            haven_2.5.1            xfun_0.33             
+ [28] callr_3.7.3            crayon_1.5.2           RCurl_1.98-1.8        
+ [31] jsonlite_1.8.4         genefilter_1.78.0      survival_3.4-0        
+ [34] glue_1.6.2             gtable_0.3.1           gargle_1.2.1          
+ [37] zlibbioc_1.42.0        XVector_0.36.0         webshot_0.5.3         
+ [40] DelayedArray_0.22.0    car_3.1-0              abind_1.4-5           
+ [43] scales_1.2.1           DBI_1.1.3              rstatix_0.7.1         
+ [46] Rcpp_1.0.9             viridisLite_0.4.1      xtable_1.8-4          
+ [49] gridGraphics_0.5-1     bit_4.0.4              truncnorm_1.0-8       
+ [52] httr_1.4.4             ellipsis_0.3.2         mice_3.14.0           
+ [55] farver_2.1.1           pkgconfig_2.0.3        XML_3.99-0.10         
+ [58] nnet_7.3-17            sass_0.4.2             dbplyr_2.2.1          
+ [61] locfit_1.5-9.6         utf8_1.2.2             reshape2_1.4.4        
+ [64] labeling_0.4.2         tidyselect_1.2.0       rlang_1.0.6           
+ [67] later_1.3.0            AnnotationDbi_1.58.0   munsell_0.5.0         
+ [70] cellranger_1.1.0       tools_4.2.0            cachem_1.0.6          
+ [73] cli_3.4.1              generics_0.1.3         RSQLite_2.2.17        
+ [76] broom_1.0.1            evaluate_0.18          fastmap_1.1.0         
+ [79] yaml_2.3.5             processx_3.8.0         knitr_1.40            
+ [82] bit64_4.0.5            fs_1.5.2               zip_2.2.1             
+ [85] KEGGREST_1.36.3        whisker_0.4            xml2_1.3.3            
+ [88] compiler_4.2.0         rstudioapi_0.14        png_0.1-7             
+ [91] ggsignif_0.6.3         reprex_2.0.2           geneplotter_1.74.0    
+ [94] bslib_0.4.0            stringi_1.7.8          HardyWeinberg_1.7.5   
+ [97] highr_0.9              ps_1.7.2               gdtools_0.2.4         
+[100] lattice_0.20-45        Matrix_1.5-1           vctrs_0.5.1           
+[103] pillar_1.8.1           lifecycle_1.0.3        jquerylib_0.1.4       
+[106] cowplot_1.1.1          data.table_1.14.2      flextable_0.8.1       
+[109] bitops_1.0-7           httpuv_1.6.6           R6_2.5.1              
+[112] promises_1.2.0.1       gridExtra_2.3          writexl_1.4.0         
+[115] codetools_0.2-18       assertthat_0.2.1       chron_2.3-57          
+[118] rprojroot_2.0.3        withr_2.5.0            GenomeInfoDbData_1.2.8
+[121] parallel_4.2.0         hms_1.1.2              grid_4.2.0            
+[124] rmarkdown_2.16         carData_3.0-5          googledrive_2.0.0     
+[127] git2r_0.30.1           getPass_0.2-2          base64enc_0.1-3       
+[130] lubridate_1.8.0       </code></pre>
 </div>
 
 

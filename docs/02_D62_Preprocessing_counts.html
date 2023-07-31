@@ -369,7 +369,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -380,8 +380,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -390,13 +390,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-10-11
+<strong>Last updated:</strong> 2023-07-31
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>DEPDC5_D62_Analysis/</code> <span
@@ -419,21 +419,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -524,15 +521,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPDC5D62Analysistree9adf10f86d6c69214abcd0ec546ebb2a6ed33614targetblank9adf10fa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPDC5D62Analysistreefbbab8e5ed3acfdc9f550f0e1082e02589db90batargetblankfbbab8ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/tree/9adf10f86d6c69214abcd0ec546ebb2a6ed33614" target="_blank">9adf10f</a>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/tree/fbbab8e5ed3acfdc9f550f0e1082e02589db90ba" target="_blank">fbbab8e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPDC5D62Analysistree9adf10f86d6c69214abcd0ec546ebb2a6ed33614targetblank9adf10fa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPDC5D62Analysistreefbbab8e5ed3acfdc9f550f0e1082e02589db90batargetblankfbbab8ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -542,7 +539,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/tree/9adf10f86d6c69214abcd0ec546ebb2a6ed33614" target="_blank">9adf10f</a>.
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/tree/fbbab8e5ed3acfdc9f550f0e1082e02589db90ba" target="_blank">fbbab8e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -557,17 +554,13 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  data/.~lock.D62_Sample_info_CePTER_RNASeq.csv#
-
-Unstaged changes:
-    Modified:   _workflowr.yml
-    Modified:   analysis/02_D62_Preprocessing_counts.Rmd
-    Modified:   analysis/MDSplots/D62_mdsplots.RData
-    Modified:   output/D62_dds_matrix.RData
-    Modified:   wflow_helper.R
+    Ignored:    analysis/.Rhistory
+    Ignored:    output/D62_mdsplots.RData
+    Ignored:    output/RescueGenelists.RData
+    Ignored:    output/figure2.pdf
 
 </code></pre>
 <p>
@@ -582,17 +575,227 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/02_D62_Preprocessing_counts.Rmd</code>) and HTML
+(<code>docs/02_D62_Preprocessing_counts.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/fbbab8e5ed3acfdc9f550f0e1082e02589db90ba/analysis/02_D62_Preprocessing_counts.Rmd" target="_blank">fbbab8e</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2023-07-31
+</td>
+<td>
+wflow_publish(c("./analysis/<em>", "code/</em>"), all = T)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/6cbb9a06158b31eff2dd5f5108ae94e873b9bd0f/analysis/02_D62_Preprocessing_counts.Rmd" target="_blank">6cbb9a0</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2023-07-25
+</td>
+<td>
+plots fro publication added
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/analysis/02_D62_Preprocessing_counts.Rmd" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+<td>
+sets the installation procedure in the readme
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KJPMolgenLab/DEPDC5_D62_Analysis/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/02_D62_Preprocessing_counts.html" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+<td>
+sets the installation procedure in the readme
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/analysis/02_D62_Preprocessing_counts.Rmd" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+<td>
+fix intaller
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KJPMolgenLab/DEPDC5_D62_Analysis/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/02_D62_Preprocessing_counts.html" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+<td>
+fix intaller
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/59a7df2e4626cde00b2a3ebb192c8394d9357608/analysis/02_D62_Preprocessing_counts.Rmd" target="_blank">59a7df2</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-09-22
+</td>
+<td>
+minor changes
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/analysis/02_D62_Preprocessing_counts.Rmd" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+<td>
+full analysis pre manuscript version
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KJPMolgenLab/DEPDC5_D62_Analysis/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/02_D62_Preprocessing_counts.html" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+<td>
+full analysis pre manuscript version
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/f249225f77b33437c39a307cc55e12fb38423d73/analysis/02_D62_Preprocessing_counts.Rmd" target="_blank">f249225</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-08-08
+</td>
+<td>
+adds data and code
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
-<pre class="r"><code>home = getwd()</code></pre>
 <div id="preprocessing" class="section level2">
 <h2>Preprocessing</h2>
+<pre class="r"><code>home = getwd()
+output= paste0(home, &quot;/output/&quot;)
+source(paste0(home,&quot;/code/custom_functions.R&quot;)) #also defines colors</code></pre>
+<pre><code>Loading required package: kableExtra</code></pre>
+<pre><code>
+Attaching package: &#39;kableExtra&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    group_rows</code></pre>
+<pre><code>Loading required package: compareGroups</code></pre>
 <pre class="r"><code>filetarget= paste0(home,&quot;/data/Countmatrix.RData&quot;)
 load(filetarget)
 
@@ -3573,11 +3776,188 @@ barplot_counts = function(DF, maintitle, colorcode) {
 par(mar=c(3,5,5,7))
 boxplot_counts(Countdata, &quot;raw counts&quot;, &quot;gRNA&quot;)</code></pre>
 <p><img src="figure/02_D62_Preprocessing_counts.Rmd/plot_counts-1.png" width="4000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_counts-1">
+Past versions of plot_counts-1.png
+</button>
+</p>
+<div id="fig-plot_counts-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-1.png" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-1.png" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-1.png" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>barplot_counts(SampleInfo, &quot;total reads&quot;, &quot;gRNA&quot;)</code></pre>
 <p><img src="figure/02_D62_Preprocessing_counts.Rmd/plot_counts-2.png" width="4000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_counts-2">
+Past versions of plot_counts-2.png
+</button>
+</p>
+<div id="fig-plot_counts-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-2.png" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-2.png" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-2.png" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot(density(log2(rowMeans(Countdata))), main=&quot;distribution of gene expression&quot;, 
      xlab=&quot;mean log2(counts +1)&quot;)</code></pre>
 <p><img src="figure/02_D62_Preprocessing_counts.Rmd/plot_counts-3.png" width="4000" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_counts-3">
+Past versions of plot_counts-3.png
+</button>
+</p>
+<div id="fig-plot_counts-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-3.png" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-3.png" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/figure/02_D62_Preprocessing_counts.Rmd/plot_counts-3.png" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># remove genes wich were not detected in at least 50% of the samples 
 keeperidx = rowSums(Countdata&gt;1)&gt;nrow(SampleInfo)/2
 
@@ -3640,7 +4020,7 @@ cpm.sel.trans = t(log2_cpm[order(varsset,decreasing = T)[1:2000],])
 rownames(cpm.sel.trans)=SampleInfo$label_rep
 
 distance = dist(cpm.sel.trans)
-hc = hclust(distance, method=&quot;ward.D2&quot;)
+hc = stats::hclust(distance, method=&quot;ward.D2&quot;)
 cutN=12 #number of different conditions (DIFF, RAPA, sgRNA)
 clusters = cutree(hc, k=cutN)
 Colors=sample(jetcolors(cutN))[clusters]
@@ -3658,6 +4038,65 @@ par(mar=c(15,3,5,3))
 plot(as.dendrogram(hc), main=paste(&quot;Similairtiy by gene expression, guessed&quot;,cutN,&quot;clusters&quot;), cex=0.7)
 colored_dots(colors = Colors, dend = as.dendrogram(hc), rowLabels = &quot;cluster&quot;)</code></pre>
 <p><img src="figure/02_D62_Preprocessing_counts.Rmd/hcluster-1.png" width="7500" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-hcluster-1">
+Past versions of hcluster-1.png
+</button>
+</p>
+<div id="fig-hcluster-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/figure/02_D62_Preprocessing_counts.Rmd/hcluster-1.png" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/figure/02_D62_Preprocessing_counts.Rmd/hcluster-1.png" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/figure/02_D62_Preprocessing_counts.Rmd/hcluster-1.png" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Similarity based on hcluster plot</p>
 <pre class="r"><code>par(mar=c(2,5,8,3))
 plot(0,0, type=&quot;n&quot;, ylab=&quot;&quot;, xlab=&quot;&quot;, 
@@ -3671,6 +4110,65 @@ axis(2, at=1:9, labels = c(paste0(&quot;P1_&quot;, LETTERS[1:8]), &quot;P2_A&quo
 axis(3, at=1:12, labels = c(paste0(&quot;Col_&quot;, 1:12)), las=3)
 abline(h=8.5)</code></pre>
 <p><img src="figure/02_D62_Preprocessing_counts.Rmd/platesetup_cluster-1.png" width="7500" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-platesetup_cluster-1">
+Past versions of platesetup_cluster-1.png
+</button>
+</p>
+<div id="fig-platesetup_cluster-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/figure/02_D62_Preprocessing_counts.Rmd/platesetup_cluster-1.png" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/figure/02_D62_Preprocessing_counts.Rmd/platesetup_cluster-1.png" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/figure/02_D62_Preprocessing_counts.Rmd/platesetup_cluster-1.png" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>sampleDistMatrix &lt;- as.matrix(distance)
 
 #colors for plotting heatmap
@@ -3712,6 +4210,65 @@ pheatmap(sampleDistMatrix,
          col = colors, 
          main = &quot;D62 Distances normalized log2 counts&quot;)</code></pre>
 <p><img src="figure/02_D62_Preprocessing_counts.Rmd/clusterandqual-1.png" width="7500" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clusterandqual-1">
+Past versions of clusterandqual-1.png
+</button>
+</p>
+<div id="fig-clusterandqual-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/figure/02_D62_Preprocessing_counts.Rmd/clusterandqual-1.png" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/figure/02_D62_Preprocessing_counts.Rmd/clusterandqual-1.png" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/figure/02_D62_Preprocessing_counts.Rmd/clusterandqual-1.png" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="pca-and-mds" class="section level2">
 <h2>PCA and MDS</h2>
@@ -3729,15 +4286,133 @@ rownames(gpca.dat) = SampleInfo$labels
 mds = as.data.frame(SampleInfo) %&gt;% cbind(cmdscale(distance))
 mds$Growth_cond = paste(SampleInfo$DIFF, SampleInfo$RAPA, sep=&quot;_&quot;)
 
-save(mds, gpca.dat, file=paste0(home, &quot;/analysis/MDSplots/D62_mdsplots.RData&quot;))
+save(mds, gpca.dat, file=paste0(home, &quot;/output/D62_mdsplots.RData&quot;))
 
 ggplot(gpca.dat, aes(x = dim1, y = dim2, color = gRNA, 
                      shape = Growth_cond)) +
             geom_point(size = 2)  + ggtitle(&quot;PCA with log2 counts D62&quot;)</code></pre>
 <p><img src="figure/02_D62_Preprocessing_counts.Rmd/PCA_MDS-1.png" width="4500" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA_MDS-1">
+Past versions of PCA_MDS-1.png
+</button>
+</p>
+<div id="fig-PCA_MDS-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/figure/02_D62_Preprocessing_counts.Rmd/PCA_MDS-1.png" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/figure/02_D62_Preprocessing_counts.Rmd/PCA_MDS-1.png" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/figure/02_D62_Preprocessing_counts.Rmd/PCA_MDS-1.png" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(mds, aes(x = `1`, y = `2`, color = gRNA, shape = Growth_cond)) +
             geom_point(size = 2)  + ggtitle(&quot;MDS with log2 counts D62&quot;)</code></pre>
 <p><img src="figure/02_D62_Preprocessing_counts.Rmd/PCA_MDS-2.png" width="4500" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PCA_MDS-2">
+Past versions of PCA_MDS-2.png
+</button>
+</p>
+<div id="fig-PCA_MDS-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/c1f246874ea5c7056df97d6a4f8defb08fee8aac/docs/figure/02_D62_Preprocessing_counts.Rmd/PCA_MDS-2.png" target="_blank">c1f2468</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/a7c5f57f10c468f0a95af2b806d65a7eef7e8a8b/docs/figure/02_D62_Preprocessing_counts.Rmd/PCA_MDS-2.png" target="_blank">a7c5f57</a>
+</td>
+<td>
+achiocch
+</td>
+<td>
+2022-10-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/KJPMolgenLab/DEPDC5_D62_Analysis/blob/dc78d322307f267fdacb688c7b3be73d2791d9f8/docs/figure/02_D62_Preprocessing_counts.Rmd/PCA_MDS-2.png" target="_blank">dc78d32</a>
+</td>
+<td>
+Andreas Geburtig-Chiocchetti
+</td>
+<td>
+2022-08-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>save(ddsMat, file=paste0(output,&quot;/D62_dds_matrix.RData&quot;))</code></pre>
 <br>
 <p>
@@ -3748,49 +4423,49 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.2.0 (2022-04-22 ucrt)
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 18363)
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur/Monterey 10.16
 
 Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
 
 locale:
-[1] LC_COLLATE=German_Germany.utf8  LC_CTYPE=German_Germany.utf8   
-[3] LC_MONETARY=German_Germany.utf8 LC_NUMERIC=C                   
-[5] LC_TIME=German_Germany.utf8    
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats4    stats     graphics  grDevices utils     datasets  methods  
 [8] base     
 
 other attached packages:
- [1] gprofiler2_0.2.1            dendextend_1.16.0          
- [3] glmpca_0.2.0                RCurl_1.98-1.8             
- [5] knitr_1.40                  DESeq2_1.36.0              
- [7] SummarizedExperiment_1.26.1 Biobase_2.56.0             
- [9] MatrixGenerics_1.8.1        matrixStats_0.62.0         
-[11] GenomicRanges_1.48.0        GenomeInfoDb_1.32.4        
-[13] IRanges_2.30.1              S4Vectors_0.34.0           
-[15] BiocGenerics_0.42.0         pheatmap_1.0.12            
-[17] RColorBrewer_1.1-3          compareGroups_4.5.1        
-[19] forcats_0.5.2               stringr_1.4.1              
-[21] dplyr_1.0.10                purrr_0.3.4                
-[23] readr_2.1.2                 tidyr_1.2.1                
-[25] tibble_3.1.8                ggplot2_3.3.6              
-[27] tidyverse_1.3.2             kableExtra_1.3.4           
+ [1] compareGroups_4.5.1         kableExtra_1.3.4           
+ [3] gprofiler2_0.2.1            dendextend_1.16.0          
+ [5] pheatmap_1.0.12             forcats_0.5.2              
+ [7] stringr_1.4.1               dplyr_1.0.10               
+ [9] purrr_0.3.5                 readr_2.1.2                
+[11] tidyr_1.2.1                 tibble_3.1.8               
+[13] tidyverse_1.3.2             ggplot2_3.4.0              
+[15] glmpca_0.2.0                RColorBrewer_1.1-3         
+[17] DESeq2_1.36.0               SummarizedExperiment_1.26.1
+[19] Biobase_2.56.0              MatrixGenerics_1.8.1       
+[21] matrixStats_0.62.0          GenomicRanges_1.48.0       
+[23] GenomeInfoDb_1.32.4         IRanges_2.30.1             
+[25] S4Vectors_0.34.0            BiocGenerics_0.42.0        
+[27] RCurl_1.98-1.8              knitr_1.40                 
 [29] workflowr_1.7.0            
 
 loaded via a namespace (and not attached):
   [1] readxl_1.4.1           uuid_1.1-0             backports_1.4.1       
   [4] systemfonts_1.0.4      lazyeval_0.2.2         splines_4.2.0         
-  [7] BiocParallel_1.30.3    digest_0.6.29          htmltools_0.5.3       
+  [7] BiocParallel_1.30.3    digest_0.6.30          htmltools_0.5.3       
  [10] viridis_0.6.2          fansi_1.0.3            magrittr_2.0.3        
  [13] Rsolnp_1.16            memoise_2.0.1          googlesheets4_1.0.1   
  [16] tzdb_0.3.0             Biostrings_2.64.1      annotate_1.74.0       
  [19] modelr_0.1.9           officer_0.4.4          svglite_2.1.0         
  [22] colorspace_2.0-3       blob_1.2.3             rvest_1.0.3           
- [25] haven_2.5.1            xfun_0.33              callr_3.7.2           
- [28] crayon_1.5.1           jsonlite_1.8.0         genefilter_1.78.0     
+ [25] haven_2.5.1            xfun_0.33              callr_3.7.3           
+ [28] crayon_1.5.2           jsonlite_1.8.4         genefilter_1.78.0     
  [31] survival_3.4-0         glue_1.6.2             gtable_0.3.1          
  [34] gargle_1.2.1           zlibbioc_1.42.0        XVector_0.36.0        
  [37] webshot_0.5.3          DelayedArray_0.22.0    scales_1.2.1          
@@ -3800,28 +4475,28 @@ loaded via a namespace (and not attached):
  [49] mice_3.14.0            farver_2.1.1           pkgconfig_2.0.3       
  [52] XML_3.99-0.10          nnet_7.3-17            sass_0.4.2            
  [55] dbplyr_2.2.1           locfit_1.5-9.6         utf8_1.2.2            
- [58] labeling_0.4.2         tidyselect_1.1.2       rlang_1.0.6           
+ [58] labeling_0.4.2         tidyselect_1.2.0       rlang_1.0.6           
  [61] later_1.3.0            AnnotationDbi_1.58.0   munsell_0.5.0         
  [64] cellranger_1.1.0       tools_4.2.0            cachem_1.0.6          
  [67] cli_3.4.1              generics_0.1.3         RSQLite_2.2.17        
- [70] broom_1.0.1            evaluate_0.16          fastmap_1.1.0         
- [73] yaml_2.3.5             processx_3.7.0         bit64_4.0.5           
+ [70] broom_1.0.1            evaluate_0.18          fastmap_1.1.0         
+ [73] yaml_2.3.5             processx_3.8.0         bit64_4.0.5           
  [76] fs_1.5.2               zip_2.2.1              KEGGREST_1.36.3       
  [79] whisker_0.4            xml2_1.3.3             compiler_4.2.0        
  [82] rstudioapi_0.14        plotly_4.10.0          png_0.1-7             
  [85] reprex_2.0.2           geneplotter_1.74.0     bslib_0.4.0           
  [88] stringi_1.7.8          HardyWeinberg_1.7.5    highr_0.9             
- [91] ps_1.7.1               gdtools_0.2.4          lattice_0.20-45       
- [94] Matrix_1.5-1           vctrs_0.4.1            pillar_1.8.1          
- [97] lifecycle_1.0.2        BiocManager_1.30.18    jquerylib_0.1.4       
-[100] data.table_1.14.2      bitops_1.0-7           flextable_0.8.1       
-[103] httpuv_1.6.6           R6_2.5.1               promises_1.2.0.1      
-[106] gridExtra_2.3          writexl_1.4.0          codetools_0.2-18      
-[109] MASS_7.3-58.1          assertthat_0.2.1       chron_2.3-57          
-[112] rprojroot_2.0.3        withr_2.5.0            GenomeInfoDbData_1.2.8
-[115] parallel_4.2.0         hms_1.1.2              grid_4.2.0            
-[118] rmarkdown_2.16         googledrive_2.0.0      git2r_0.30.1          
-[121] getPass_0.2-2          lubridate_1.8.0        base64enc_0.1-3       </code></pre>
+ [91] ps_1.7.2               gdtools_0.2.4          lattice_0.20-45       
+ [94] Matrix_1.5-1           vctrs_0.5.1            pillar_1.8.1          
+ [97] lifecycle_1.0.3        jquerylib_0.1.4        flextable_0.8.1       
+[100] data.table_1.14.2      bitops_1.0-7           httpuv_1.6.6          
+[103] R6_2.5.1               promises_1.2.0.1       gridExtra_2.3         
+[106] writexl_1.4.0          codetools_0.2-18       MASS_7.3-58.1         
+[109] assertthat_0.2.1       chron_2.3-57           rprojroot_2.0.3       
+[112] withr_2.5.0            GenomeInfoDbData_1.2.8 parallel_4.2.0        
+[115] hms_1.1.2              grid_4.2.0             rmarkdown_2.16        
+[118] googledrive_2.0.0      git2r_0.30.1           getPass_0.2-2         
+[121] base64enc_0.1-3        lubridate_1.8.0       </code></pre>
 </div>
 </div>
 
