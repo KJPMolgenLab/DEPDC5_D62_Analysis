@@ -80,9 +80,7 @@ The rendered output is available [here](https://kjpmolgenlab.github.io/DEPDC5_D6
 
 
 ## Attribution
-
-this work has been funded by the Hessian Governemnt (LOEWE Schwerpunkt CePTER)
-We thank 
+This work has been funded by the Hessian government (LOEWE Schwerpunkt CePTER)
 
 ## Affiliations
 
@@ -96,11 +94,11 @@ We thank
 [^8]: Department of Human Genetics, David Geffen School of Medicine, University of California, Los Angeles, Los Angeles, CA, 90095, USA
 [^9]: Institute of Cell Biology and Neuroscience, University of Frankfurt, D-60438 Frankfurt am Main, Germany
 [^10]: Neurovascular Disorders, Buchmann Institute for Molecular Life Sciences, University of Frankfurt, D-60438 Frankfurt am Main, Germany
-[^11]: Epilepsy Center Frankfurt Rhine-Main, Center of Neurology and Neurosurgery, Goethe-University Frankfurt, Schleusenweg 2-16 (Haus 95), 60528, Frankfurt am Main, Germany 
+[^11]: Epilepsy Center Frankfurt Rhine-Main, Center of Neurology and Neurosurgery, Goethe-University Frankfurt, Schleusenweg 2-16 (Haus 95), 60528, Frankfurt am Main, Germany
 [^12]: Center for Personalized Translational Epilepsy Research (CePTER), Goethe-University Frankfurt, Frankfurt am Main, Germany
 [^13]: Departments of Clinical Neurosciences, Medical Genetics, and Community Health Sciences, Hotchkiss Brain Institute & Alberta Children's Hospital Research Institute, Cumming School of Medicine, University of Calgary, Calgary, Alberta, Canada
-(DOI will be posted here)
 
+(DOI will be posted here)
 
 
 
