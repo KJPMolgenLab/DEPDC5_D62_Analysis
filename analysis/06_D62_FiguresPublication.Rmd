@@ -529,6 +529,53 @@ ggsave("./docs/Publication_Supplfigure3.svg", finplot, width = 10, height = 13)
 
 ```
 
+```{r}
+
+# supplTab 5
+resfile = grep("GO", list.files("C:/Users/andreas_chiocchetti/OneDrive/Documents/Frankfurt Uni/Jones/Manuscript_Jones/DEPDC5_D62_Analysis/output"), value = T)
+
+names(resfile) = gsub(".xlsx|GOres|D62|_", "", resfile)
+names(resfile) = gsub("noDIFF", "PROLIF", names(resfile))
+
+
+datset= list()
+for(n in resfile){
+  datset[[n]] = openxlsx::read.xlsx(paste0("./output/", n))
+}
+
+names(datset) = names(resfile)
+
+write.xlsx(datset, file = "./output/Table_S5_GOres_combined.xlsx")
+
+
+
+```
+
+```{r}
+
+# supplTab 3
+resfile = grep("Restab", list.files("C:/Users/andreas_chiocchetti/OneDrive/Documents/Frankfurt Uni/Jones/Manuscript_Jones/DEPDC5_D62_Analysis/output"), value = T)
+
+names(resfile) = gsub(".xlsx|Restab|D62|_", "", resfile)
+names(resfile) = gsub("noDIFF", "PROLIF", names(resfile))
+
+resfile = grep("NTCnoRAPA", resfile, value = T)
+
+
+system("rm ./output/Table_S3_DEX_results_combined.xlsx")
+
+
+datset= list()
+for(n in resfile){
+  datset[[n]] = openxlsx::read.xlsx(paste0("./output/", n))
+}
+
+names(datset) = names(resfile)
+write.xlsx(datset, file = "./output/Table_S3_DEXres_combined.xlsx")
+
+```
+
+
 
 
 

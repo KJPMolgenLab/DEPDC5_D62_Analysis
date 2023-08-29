@@ -352,21 +352,28 @@ noDIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noD
                          sg2.1_noDIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$padj,
                          sg2.2_noDIFF_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange,
                          sg2.2_noDIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$padj,
-                         sgAVG_noDIFF_noRAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange)),
-                         sgAVG_noDIFF_noRAPA_adjP = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$padj)),
+                         sgAVG_noDIFF_noRAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$log2FoldChange,                                                                 
+                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$log2FoldChange)),
+                         sgMax_noDIFF_noRAPA_adjP = rowMaxs(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_noRAPA$padj,                                                                 
+                                                                  restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_noRAPA$padj)),
+                         
                          sg2.1_noDIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,
                          sg2.1_noDIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,
                          sg2.2_noDIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange,
                          sg2.2_noDIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj, 
-                         sgAVG_noDIFF_RAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange)),
-                         sgAVG_noDIFF_RAPA_adjP = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)),
+                         sgAVG_noDIFF_RAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,                                                                 
+                                                               restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange)),
+                         sgMax_noDIFF_RAPA_adjP = rowMaxs(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,                                                                 
+                                                               restab_D62_NTCnoRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)),
                          
                          sg2.1_noDIFF_RAPA_rapantc_FC=restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,
                          sg2.1_noDIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,
                          sg2.2_noDIFF_RAPA_rapantc_FC=restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange,
                          sg2.2_noDIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj, 
-                         sgAVG_noDIFF_RAPA_rapantc_FC = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange)), 
-                         sgAVG_noDIFF_RAPA_rapantc_adjP = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)))
+                         sgAVG_noDIFF_RAPA_rapantc_FC = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$log2FoldChange,                                                         
+                                                                       restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$log2FoldChange)), 
+                         sgMax_noDIFF_RAPA_rapantc_adjP = rowMaxs(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_noDIFF_RAPA$padj,                                                         
+                                                                        restab_D62_NTCwRAPA_sgNTC_sg2.2_noDIFF_RAPA$padj)))
 for(i in names(genelists)){
   noDIFFresults[,i] <- noDIFFresults$ENTREZ_ID %in% genelists[[i]]$ENTREZ_ID
 }
@@ -386,20 +393,20 @@ DIFFresults=data.frame(ENTREZ_ID=rownames(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_
                        sg2.2_DIFF_noRAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange,
                        sg2.2_DIFF_noRAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$padj,
                        sgAVG_DIFF_noRAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA$log2FoldChange,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$log2FoldChange)),
-                       sgAVG_DIFF_noRAPA_adjP = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$padj)),
+                       sgMAX_DIFF_noRAPA_adjP = rowMaxs(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_noRAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_noRAPA$padj)),
                        sg2.1_DIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,
                        sg2.1_DIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,
                        sg2.2_DIFF_RAPA_FC=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange,
                        sg2.2_DIFF_RAPA_adjP=restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$padj, 
                        sgAVG_DIFF_RAPA_FC = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange)),
-                       sgAVG_DIFF_RAPA_adjP = rowMeans(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)),
+                       sgMAX_DIFF_RAPA_adjP = rowMaxs(cbind(restab_D62_NTCnoRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,                                                                 restab_D62_NTCnoRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)),
                        
                        sg2.1_DIFF_RAPA_rapantc_FC=restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,
                        sg2.1_DIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,
                        sg2.2_DIFF_RAPA_rapantc_FC=restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange,
                        sg2.2_DIFF_RAPA_rapantc_adjP=restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$padj, 
                        sgAVG_DIFF_RAPA_rapantc_FC = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$log2FoldChange,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$log2FoldChange)), 
-                       sgAVG_DIFF_RAPA_rapantc_adjP = rowMeans(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)))
+                       sgMAX_DIFF_RAPA_rapantc_adjP = rowMaxs(cbind(restab_D62_NTCwRAPA_sgNTC_sg2.1_DIFF_RAPA$padj,                                                         restab_D62_NTCwRAPA_sgNTC_sg2.2_DIFF_RAPA$padj)))
 
 
 for(i in names(genelists)){
